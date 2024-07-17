@@ -1,0 +1,9 @@
+Resultados da busca por indice:
+Tempo Máximo: 3.000000
+Tempo Mínimo: 1.000000
+Média: 1.800000
+
+Resultados da busca direta:
+Tempo Máximo: 3.000000
+Tempo Mínimo: 1.000000
+Média: 1.880000
