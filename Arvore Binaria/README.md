@@ -15,4 +15,4 @@ Dessa forma cada `nó` contém uma chave, podendo ser um estrutura caso queira a
 - Degenerada: árvore totalmente desbalanceada, tornando-se uma lista de complexidade O(n).
   
 > [!NOTE]
-> Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log_2(n)`$), e quantidade de `nós` em cada nível pode ser calculada por $`2^(nível)`$.
+> Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log_2(n)`$), e quantidade de `nós` em cada nível pode ser calculada por $`2^{nível}`$.
