@@ -14,5 +14,5 @@ Dessa forma cada `nó` contém uma chave, podendo ser um estrutura caso queira a
 - Cheia: se existe `nós` de grau 0, eles estão no último nível.
 - Degenerada:
   
-[!NOTE]
-Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log_2(n)`$)
+> [!NOTE]
+> Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log_2(n)`$)
