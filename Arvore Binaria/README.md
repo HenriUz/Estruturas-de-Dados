@@ -12,7 +12,7 @@ Dessa forma cada `nó` contém uma chave, podendo ser um estrutura caso queira a
 - Estritamente binária: possui somente `nós` de grau 2 ou 0.
 - Completa: se existe `nós` de grau 0, eles estão no penúltimo ou último nível.
 - Cheia: se existe `nós` de grau 0, eles estão no último nível.
-- Degenerada:
+- Degenerada: árvore totalmente desbalanceada, tornando-se uma lista de complexidade O(n).
   
 > [!NOTE]
-> Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log_2(n)`$)
+> Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log_2(n)`$), e quantidade de `nós` em cada nível pode ser calculada por $`2^nível`$.
