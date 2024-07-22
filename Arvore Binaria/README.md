@@ -15,4 +15,4 @@ Dessa forma cada `nó` contém uma chave, podendo ser um estrutura caso queira a
 - Degenerada:
   
 [!NOTE]
-Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log{2}(n)`$)
+Vale notar que a árvore cheia é a árvore ideal, pois sua complexidade é O($`\log2{n}`$)
