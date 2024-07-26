@@ -15,3 +15,12 @@ Quando um `nó` se torna desbalanceado, rotações são aplicadas para que a `á
 | 2 | -1 | Dupla: direita - esquerda |
 | -2 | 1 | Dupla: esquerda - direita |
 | -2 | 0 ou -1 | Simples para a direita |
+
+### Ajuste no FB
+Após realizar uma rotação, os fatores de balanceamento de cada `nó` envolvido deve ser ajustado seguindo a seguinte tabela:
+| Nó Antes | Filho Antes | Neto Antes | Rotação | Nó Depois | Filho Depois | Neto Depois |
+| -------- | ----------- | ---------- | ------- | --------- | ------------ | ----------- |
+| -2 | -1 | | Simples para a direita | 0 | 0 | |
+| -2 | 0 | | Simples para a direita | -1 | 1 | |
+| 2 | 1 | | Simples para a esquerda | 0 | 0 | |
+| 2 | 0 | | Simples para a esquerda | 1 | -1 | |
