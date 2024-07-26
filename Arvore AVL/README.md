@@ -3,10 +3,10 @@
 
 Para representar isso, cada `nó` guarda seu fator de balanceamento (`fb`), e no caso será considerado que o `fb` é a altura da subárvore direita menos a altura da subárvore esquerda.
 > [!note]
-> Para o balanceamento de uma árvore é sempre importante considerar as seguintes condições:
-> Não balancear: aumenta o tempo médio de pesquisa
-> Balancear sempre: alto custo computacional, e árvore sempre cheia.
-> Bom balanceamento: permite um pouco de desbalanceamento.
+> Para o balanceamento de uma árvore é sempre importante considerar as seguintes condições: \
+> Não balancear: aumenta o tempo médio de pesquisa. \
+> Balancear sempre: alto custo computacional, e árvore sempre cheia. \
+> Bom balanceamento: permite um pouco de desbalanceamento. 
 
 ## Desbalanceamento
 Uma `Árvore AVL` pode se tornar desbalanceada em 2 situações (na realidade são 4, mas são simétricas 2 a 2):
