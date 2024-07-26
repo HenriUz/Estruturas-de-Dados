@@ -33,3 +33,6 @@ Após realizar uma rotação, os fatores de balanceamento de cada `nó` envolvid
 
 > [!important]
 > A remoção na `Árvore AVL` pode necessitar de mais de uma rotação, então sua complexidade é O($`k * log (n)`$)
+
+## Links para visualização
+https://www.cs.usfca.edu/~galles/visualization/AVLtree.html
