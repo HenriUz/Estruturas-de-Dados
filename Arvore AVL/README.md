@@ -24,3 +24,9 @@ Após realizar uma rotação, os fatores de balanceamento de cada `nó` envolvid
 | -2 | 0 | | Simples para a direita | -1 | 1 | |
 | 2 | 1 | | Simples para a esquerda | 0 | 0 | |
 | 2 | 0 | | Simples para a esquerda | 1 | -1 | |
+| -2 | 1 | 0 | Dupla: esquerda - direita | 0 | 0 | 0 |
+| -2 | 1 | -1| Dupla: esquerda - direita | 1 | 0 | 0 |
+| -2 | 1 | 1 | Dupla: esquerda - direita | 0 | -1 | 0 |
+| 2 | -1 | 0 | Dupla: direita - esquerda | 0 | 0 | 0 |
+| 2 | -1 | -1 | Dupla: direita - esquerda | 0 | 1 | 0 |
+| 2 | -1 | 1 | Dupla: direita - esquerda | -1 | 0 | 0 |
