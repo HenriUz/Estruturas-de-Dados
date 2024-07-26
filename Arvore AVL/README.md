@@ -32,4 +32,4 @@ Após realizar uma rotação, os fatores de balanceamento de cada `nó` envolvid
 | 2 | -1 | 1 | Dupla: direita - esquerda | -1 | 0 | 0 |
 
 > [!important]
-> A remoção na `Árvore AVL` pode necessitar de mais de uma rotação, então sua complexidade é `O($`k * log (n)`$)`
+> A remoção na `Árvore AVL` pode necessitar de mais de uma rotação, então sua complexidade é O($`k * log (n)`$)
