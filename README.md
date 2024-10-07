@@ -5,4 +5,5 @@ Este repositório tem o objetivo de armazenar implementações, na linguagem C, 
 ## Organização
 - Arvore AVL: esta pasta contém a implementação da árvore binária balanceada AVL, junto com uma explicação sobre seu funcionamento.
 - Arvore Binaria: esta pasta contém a implementação de uma árvore binária sem balanceamento comum.
+- Árvore Rubro-Negra: esta pasta contém a implementação de uma árvore rubro-negra, junto com uma explicação sobre seu funcionamento.
 - B-Tree: esta pasta contém a implementação da árvore B, para ordem par, junto com uma explicação. Além disso, essa pasta é um benchmarking comparando o tempo de acesso usando a árvore B e usando um arquivo de texto diretamente.
