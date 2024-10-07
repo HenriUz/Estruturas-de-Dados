@@ -1,36 +1,44 @@
+/*
+ArvoreB.c
+
+Descrição: implementação das funções da árvore-b.
+*/
+
+/* --- Includes. --- */
+
 #include "ArvoreB.h"
 #include <stdlib.h>
 
-/*** -- Estruturas -- ***/
+/* --- Estruturas. --- */
 
 struct arvore {
-    pagina *raiz;
-    int ordem;
-    int numElementos;
+    pagina *raiz; //Raiz da árvore.
+    int ordem; //Ordem da árvore.
+    int numElementos; //Quantidade de elementos na árvore.
 };
 
 struct pagina {
-    chave **chaves;
-    pagina **filhos;
-    pagina *pai;
-    int folha;
-    int numChaves;
+    chave **chaves; //Chaves armazenadas (ponteiro de ponteiro para ter mais controle sobre os elementos).
+    pagina **filhos; //Filhos da página.
+    pagina *pai; //Pai da página.
+    int folha; //1 - folha, 0 - não é folha.
+    int numChaves; //Quantidade de chaves na página.
 };
 
 struct chave {
-    int matricula;
-    int linha;
+    int matricula; //Matrícula.
+    int linha; //Linha no arquivo.
 };
 
-/*** -- Funções da Árvore -- ***/
+/* --- Funções. --- */
 
 arvore *criaArvore(int ordem) {
-    /*** -- Criando a árvore. -- ***/
+    /* Criando a árvore. */
     arvore *arv = (arvore*)malloc(sizeof(arvore));
     if(!arv) {
         return NULL;
     }
-    /*** -- Setando valores iniciais. -- ***/
+    /* Setando valores iniciais. */
     arv->ordem = ordem;
     arv->numElementos = 0;
     arv->raiz = NULL;
@@ -49,15 +57,13 @@ int getOrdem(arvore *arv) {
     return arv->ordem;
 }
 
-/*** -- Funções da Inserção -- ***/
-
 pagina *criaPagina(int maximoElementos) {
-    /*** -- Criando a página. -- ***/
+    /* Criando a página. */
     pagina *page = (pagina*)malloc(sizeof(pagina));
     if(!page) {
         return NULL;
     }
-    /*** -- Criando as listas de ponteiros. -- ***/
+    /* Criando as listas de ponteiros. */
     page->chaves = (chave**)malloc(sizeof(chave*) * maximoElementos);
     if(!page->chaves) {
         free(page);
@@ -69,26 +75,25 @@ pagina *criaPagina(int maximoElementos) {
         free(page);
         return NULL;
     }
-    /*** -- Setando valores. -- ***/
+    /* Setando valores. */
     page->numChaves = 0;
-    //O restante dos elementos devem ser setados na função em que foi chamada.
-    /*** -- Fazendo os ponteiros da lista apontarem para nada. -- ***/
+    //O restante dos elementos deve ser setados na função em que foi chamada.
+    /* Fazendo os ponteiros da lista apontarem para nada. */
     for(int i = 0; i < maximoElementos; i++) {
         page->chaves[i] = NULL;
         page->filhos[i] = NULL;
     }
     page->filhos[maximoElementos] = NULL;
-    /*** -- Retorno. -- ***/
     return page;
 }
 
 pagina *criaRaiz(arvore *arv, pagina *filhoD, chave *key) {
-    /*** -- Criando a página. -- ***/
+    /* Criando a página. */
     pagina *raiz = criaPagina(arv->ordem - 1);
     if(!raiz) {
         return NULL;
     }
-    /*** -- Setando valores. -- ***/
+    /* Setando valores. */
     raiz->pai = NULL; //Raiz não tem pai.
     raiz->chaves[0] = key;
     raiz->numChaves++;
@@ -97,23 +102,23 @@ pagina *criaRaiz(arvore *arv, pagina *filhoD, chave *key) {
     }else {
         raiz->folha = 1; //Se o filho não existe, é uma folha.
     }
+    /* Vinculando as páginas. */
     raiz->filhos[0] = arv->raiz; //Por padrão o filho esquerdo é a antiga raiz.
     raiz->filhos[1] = filhoD;
     if(raiz->filhos[0]) {
         raiz->filhos[0]->pai = raiz;
         raiz->filhos[1]->pai = raiz;
     }
-    /*** -- Retorno. -- ***/
     return raiz;
 }
 
 void insereNaPagina(pagina *page, pagina *filhoD, chave *newChave, int pos) {
-    /*** -- Deslocando os elementos para a direita. -- ***/
+    /* Deslocando os elementos para a direita. */
     for(int i = page->numChaves; i > pos; i--) {
         page->chaves[i] = page->chaves[i-1];
         page->filhos[i+1] = page->filhos[i];
     }
-    /*** -- Inserindo na página. -- ***/
+    /* Inserindo na página. */
     page->chaves[pos] = newChave;
     page->filhos[pos+1] = filhoD;
     if(page->filhos[pos+1]) {
@@ -124,15 +129,15 @@ void insereNaPagina(pagina *page, pagina *filhoD, chave *newChave, int pos) {
 
 void split(arvore *arv, pagina *page, pagina *filhoD, pagina **salvaFilhoD, chave *newChave, chave **salvaChave, int pos) {
     int posMediana = page->numChaves/2;
-    /*** -- Criando a nova página (novo filho direito do pai). -- ***/
+    /* Criando a nova página. */
     *salvaFilhoD = criaPagina(page->numChaves); //Criando a nova página, que consequentemente se tornará o novo filho direito para o pai.
     if(!*salvaFilhoD) {
         return;
     }
-    /*** -- Setando os valores iniciais. -- ***/
+    /* Setando os valores iniciais. */
     (*salvaFilhoD)->pai = page->pai;
     (*salvaFilhoD)->folha = page->folha;
-    /*** -- Deslocando os elementos da página cheia para a nova página. -- ***/
+    /* Deslocando os elementos da página cheia para a nova página. */
     for(int i = posMediana + 1; i < page->numChaves; i++) {
         (*salvaFilhoD)->chaves[i - posMediana - 1] = page->chaves[i];
         (*salvaFilhoD)->filhos[i - posMediana - 1] = page->filhos[i];
@@ -147,10 +152,10 @@ void split(arvore *arv, pagina *page, pagina *filhoD, pagina **salvaFilhoD, chav
         (*salvaFilhoD)->filhos[posMediana]->pai = *salvaFilhoD;
     }
     page->filhos[page->numChaves] = NULL;
-    /*** -- Atualizando a quantidade de chaves em cada página. -- ***/
+    /* Atualizando a quantidade de chaves em cada página. */
     page->numChaves -= posMediana;
     (*salvaFilhoD)->numChaves = posMediana;
-    /*** -- Inserindo o elemento na página correta. -- ***/
+    /* Inserindo o elemento na página correta. */
     if(pos <= posMediana) {
         //Se a posição é igual ou menor do que a posição mediana, o elemento deve ser inserido na página que estava cheia.
         insereNaPagina(page, filhoD, newChave, pos);
@@ -158,7 +163,7 @@ void split(arvore *arv, pagina *page, pagina *filhoD, pagina **salvaFilhoD, chav
         //Se a posição é maior do que a posição da mediana, o elemento deve ser inserido na nova página.
         insereNaPagina(*salvaFilhoD, filhoD, newChave, pos - posMediana - 1);
     }
-    /*** -- Fazendo a chave mediana se tornar a nova chave para o pai. -- ***/
+    /* Fazendo a chave mediana se tornar a nova chave para o pai. */
     *salvaChave = page->chaves[page->numChaves-1];
     page->chaves[page->numChaves-1] = NULL;
     page->numChaves--;
@@ -171,15 +176,15 @@ int procuraPaginaI(arvore *arv, pagina *page, pagina **filhoD, chave *newChave, 
         *filhoD = NULL;
         return 1;
     }
-    /*** -- Procurando o filho/posição onde a chave será inserida. -- ***/
+    /* Procurando o filho/posição onde a chave será inserida. */
     for(pos = 0; pos < page->numChaves && newChave->matricula > page->chaves[pos]->matricula; pos++);
-    /*** -- Verificando se devemos inserir (chegamos em uma folha, ou ocorreu uma operação de split em um dos filhos). -- ***/
+    /* Verificando se devemos inserir (chegamos em uma folha, ou ocorreu uma operação de split em um dos filhos). */
     if(procuraPaginaI(arv, page->filhos[pos], filhoD, newChave, salvaChave)) {
         if(page->numChaves < arv->ordem - 1) {
             //Página ainda tem espaço.
             insereNaPagina(page, *filhoD, *salvaChave, pos);
         }else {
-            //Página esta cheia, devemos realizar o split.
+            //Página está cheia, devemos realizar o split.
             split(arv, page, *filhoD, filhoD, *salvaChave, salvaChave, pos);
             return 1;
         }
@@ -188,15 +193,15 @@ int procuraPaginaI(arvore *arv, pagina *page, pagina **filhoD, chave *newChave, 
 }
 
 int insere(arvore *arv, int mat, int linha) {
-    pagina *filhoD, *raiz; //Criando o ponteiro que irá salvar o filho direito e salvar a raiz anterior.
-    chave *newChave = (chave*)malloc(sizeof(chave)); //Criando a nova chave.
-    chave **salvaChave = &newChave;
+    pagina *filhoD, *raiz; //Ponteiro que irá salvar o filho direito, e ponteiro que irá salvar a raiz anterior.
+    chave *newChave = (chave*)malloc(sizeof(chave)); //Nova chave.
+    chave **salvaChave = &newChave; //Ponteiro que salva a chave.
     if(!newChave) {
         return 0;
     }
     newChave->linha = linha;
     newChave->matricula = mat;
-    /*** -- Inserindo o novo elemento. -- ***/
+    /* Inserindo o novo elemento. */
     if(procuraPaginaI(arv, arv->raiz, &filhoD, newChave, salvaChave)) {
         //A árvore está vazia ou a raiz sofreu um split.
         raiz = arv->raiz;
@@ -214,13 +219,13 @@ int insere(arvore *arv, int mat, int linha) {
 }
 
 int processaCarga(arvore *arv, FILE *dataset) {
-    //Simulando o registro da main para a leitura da linha.
+    /* Simulando o registro da main para a leitura da linha. */
     char nome[6], dataNasc[11];
     int mat, i = 0;
     long long int cpf;
-    //Colocando o ponteiro do arquivo no início.
+    /* Colocando o ponteiro do arquivo no início. */
     rewind(dataset);
-    /*** -- Inserindo na árvore. -- ***/
+    /* Inserindo na árvore. */
     while(!feof(dataset)) {
         //Se a fscanf identificar que a linha acabou antes de converter tudo, não insere.
         if(fscanf(dataset, "%d %s %s %lld", &mat, nome, dataNasc, &cpf) != EOF) {
@@ -231,38 +236,37 @@ int processaCarga(arvore *arv, FILE *dataset) {
     }
     return 1;
 }
-/*** -- Funções da Remoção -- ***/
 
 void copiaPredecessor(pagina *page, int pos) {
-    /*** -- Procurando o predecessor. -- ***/
+    /* Procurando o predecessor. */
     pagina *filho = page->filhos[pos];
     while(!filho->folha) {
         filho = filho->filhos[filho->numChaves];
     }
-    /*** -- Fazendo a cópia por valor. -- ***/
+    /* Fazendo a cópia por valor. */
     page->chaves[pos]->matricula = filho->chaves[filho->numChaves - 1]->matricula;
     page->chaves[pos]->linha = filho->chaves[filho->numChaves - 1]->linha;
 }
 
 void removeDaPagina(pagina *page, int pos) {
     chave *aux = page->chaves[pos];
-    /*** -- Deslocando valores. -- ***/
+    /* Deslocando valores. */
     for(int i = pos; i < page->numChaves - 1; i++) {
         page->chaves[i] = page->chaves[i+1];
     }
-    /*** -- Removendo o valor. -- ***/
+    /* Removendo o valor. */
     page->chaves[page->numChaves - 1] = NULL;
     page->numChaves--;
     free(aux);
+    aux = NULL;
 }
 
 void merge(pagina *pai, int pos) {
     pagina *filhoE = pai->filhos[pos - 1], *filhoD = pai->filhos[pos];
-    /*** -- Jogando os elementos para o filho esquerdo. -- ***/
-    //Descendo o pai.
+    /* Descendo o pai. */
     filhoE->chaves[filhoE->numChaves] = pai->chaves[pos-1];
     filhoE->numChaves++;
-    //Jogando os elementos do filho direito.
+    /* Jogando os elementos do filho direito. */
     filhoE->filhos[filhoE->numChaves] = filhoD->filhos[0];
     if(filhoE->filhos[filhoE->numChaves]) {
         filhoE->filhos[filhoE->numChaves]->pai = filhoE;
@@ -274,7 +278,7 @@ void merge(pagina *pai, int pos) {
             filhoE->filhos[filhoE->numChaves]->pai = filhoE;
         }
     }
-    /*** -- Deslocando elementos na página pai. -- ***/
+    /* Deslocando elementos na página pai. */
     for(int i = pos - 1; i < pai->numChaves - 1; i++) {
         pai->chaves[i] = pai->chaves[i+1];
         pai->filhos[i+1] = pai->filhos[i+2];
@@ -282,25 +286,25 @@ void merge(pagina *pai, int pos) {
     pai->chaves[pai->numChaves - 1] = NULL;
     pai->filhos[pai->numChaves] = NULL;
     pai->numChaves--;
-    /*** -- Liberando o filho direito e retornando. -- ***/
+    /* Liberando o filho direito e retornando. */
     free(filhoD->chaves);
     free(filhoD->filhos);
     free(filhoD);
+    filhoD = NULL;
 }
 
 void emprestaDireita(pagina *pai, int pos) {
     pagina *filhoE = pai->filhos[pos], *filhoD = pai->filhos[pos+1];
-    /*** -- Jogando elementos para o filho esquerdo. -- ***/
-    //Descendo o pai.
+    /* Descendo o pai. */
     filhoE->chaves[filhoE->numChaves] = pai->chaves[pos];
-    //Fazendo o filho mais a esquerda da página direita, se tornar o filho mais a direita da página esquerda.
+    /* Fazendo o filho mais à esquerda da página direita, se tornar o filho mais à direita da página esquerda. */
     filhoE->filhos[++filhoE->numChaves] = filhoD->filhos[0];
     if(filhoE->filhos[filhoE->numChaves]) {
         filhoE->filhos[filhoE->numChaves]->pai = filhoE;
     }
-    /*** -- Jogando elemento para o pai. -- ***/
+    /* Jogando elemento para o pai. */
     pai->chaves[pos] = filhoD->chaves[0];
-    /*** -- Deslocando elementos no filho direito. -- ***/
+    /* Deslocando elementos no filho direito. */
     filhoD->numChaves--;
     for(int i = 0; i < filhoD->numChaves; i++) {
         filhoD->chaves[i] = filhoD->chaves[i+1];
@@ -313,28 +317,28 @@ void emprestaDireita(pagina *pai, int pos) {
 
 void emprestaEsquerda(pagina *pai, int pos) {
     pagina *filhoE = pai->filhos[pos-1], *filhoD = pai->filhos[pos];
-    /*** -- Deslocando elementos do filho direito. -- ***/
+    /* Deslocando elementos do filho direito. */
     for(int i = filhoD->numChaves; i > 0; i--) {
         filhoD->chaves[i] = filhoD->chaves[i-1];
         filhoD->filhos[i+1] = filhoD->filhos[i];
     }
     filhoD->filhos[1] = filhoD->filhos[0];
-    /*** -- Jogando elementos para o filho direito. -- ***/
+    /* Jogando elementos para o filho direito. */
     filhoD->chaves[0] = pai->chaves[pos-1];
     filhoD->filhos[0] = filhoE->filhos[filhoE->numChaves];
     if(filhoD->filhos[0]) {
         filhoD->filhos[0]->pai = filhoD;
     }
     filhoD->numChaves++;
-    /*** -- Jogando elemento para o pai. -- ***/
+    /* Jogando elemento para o pai. */
     pai->chaves[pos-1] = filhoE->chaves[--filhoE->numChaves];
-    /*** -- Removendo elemento do filho esquerdo. -- ***/
+    /* Removendo elemento do filho esquerdo. */
     filhoE->chaves[filhoE->numChaves] = NULL;
     filhoE->filhos[filhoE->numChaves+1] = NULL;
 }
 
 void corrigiFilho(arvore *arv, pagina *pai, int pos) {
-    /*** -- Verificando onde está o filho com a quantidade abaixo do mínimo. -- ***/
+    /* Verificando onde está o filho com a quantidade abaixo do mínimo. */
     if(!pos) {
         //Filho é o mais a esquerda, então só pode emprestar do irmão direito ou dar merge.
         if(pai->filhos[pos+1]->numChaves > arv->ordem/2 - 1) {
@@ -366,12 +370,12 @@ void corrigiFilho(arvore *arv, pagina *pai, int pos) {
 int procuraPaginaD(arvore *arv, pagina *page, int mat) {
     int cond = 0, pos;
     if(page) {
-        /*** -- Procurando elemento. -- ***/
+        /* Procurando elemento. */
         for(pos = 0; pos < page->numChaves && mat > page->chaves[pos]->matricula; pos++);
         if(pos < page->numChaves && mat == page->chaves[pos]->matricula) {
             cond = 1;
         }
-        /*** -- Verificando o que fazer. -- ***/
+        /* Verificando o que fazer. */
         if(cond) {
             //Elemento está na página atual, então se não for folha copia o predecessor e remove recursivamente, e se for folha remove.
             if(!page->folha) {
@@ -398,7 +402,7 @@ int procuraPaginaD(arvore *arv, pagina *page, int mat) {
 int deleta(arvore *arv, int mat) {
     pagina *aux;
     int cond;
-    /*** -- Verificando condições. -- ***/
+    /* Verificando condições. */
     if(arv->numElementos) {
         //Árvore não está vazia, procurando elemento.
         cond = procuraPaginaD(arv, arv->raiz, mat);
@@ -414,6 +418,7 @@ int deleta(arvore *arv, int mat) {
                 free(aux->chaves);
                 free(aux->filhos);
                 free(aux);
+                aux = NULL;
             }
         }
         return cond;
@@ -421,15 +426,13 @@ int deleta(arvore *arv, int mat) {
     return -1;
 }
 
-/*** -- Funções da Busca -- ***/
-
 int busca(arvore *arv, int mat) {
     pagina *aux, *atual = arv->raiz;
     int linha = -1;
-    /*** -- Iniciando a busca. -- ***/
+    /* Iniciando a busca. */
     while(atual) {
         aux = atual;
-        //Percorrendo os elementos da página.
+        /* Percorrendo os elementos da página. */
         for(int i = 0; aux == atual && i < atual->numChaves; i++) {
             if(mat < atual->chaves[i]->matricula) {
                 //Elemento é menor, então entra no filho esquerdo.
@@ -444,11 +447,8 @@ int busca(arvore *arv, int mat) {
             }
         }
     }
-    /*** -- Retorno. -- ***/
     return linha;
 }
-
-/*** -- Funções da Impreção -- ***/
 
 void imprimeArvore(pagina *page, int nivel) {
     if(page) {
