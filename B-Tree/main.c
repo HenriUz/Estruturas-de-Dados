@@ -1,3 +1,11 @@
+/*
+main.c
+
+Descrição: código responsável por lidar com os inputs do usuário, por fornecer as funções de busca, e por informar o tempo de cada operação de busca.
+*/
+
+/* --- Includes. --- */
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -5,54 +13,54 @@
 #include "ES/ES.h"
 #include "ArvoreB/ArvoreB.h"
 
-/*** -- Estruturas -- ***/
+/* --- Estruturas. --- */
 
 typedef struct registro {
-    char nome[6], dataNasc[11];
-    int mat;
-    long long int cpf;
+    char nome[6], dataNasc[11]; //Nome (por padrão são todos de 5 caracteres), data de nascimento (será lida como string).
+    int mat; //Número de matrícula.
+    long long int cpf; //Cpf.
 }registro;
 
 typedef struct metricas {
-    double tempoMax, tempoMin;
-    float media;
+    double tempoMax, tempoMin; //Maior tempo de busca, menor tempo de busca.
+    float media; //Média entre todos os tempos de busca.
 }metricas;
 
-/*** -- Funções -- ***/
+/* --- Funções. --- */
 
 /*
-Descrição: Função que faz a busca por uma matrícula usando o índice.
-Entrada: Ponteiro para o arquivo, inteiro da linha onde se encontra o registro.
-Saída: Nada.
+Descrição: função que faz a busca por uma matrícula usando o índice.
+Entrada: ponteiro para o arquivo, inteiro da linha onde se encontra o registro.
+Saída: nada.
 */
 void buscaIndice(FILE *arq, int linha) {
     registro reg;
     char line[100];
     int tam;
-    //Colocando o ponteiro do arquivo no início.
+    /* Colocando o ponteiro do arquivo no início. */
     rewind(arq);
-    //Lendo uma linha até o \n e contando o seu tamanho.
+    /* Lendo uma linha até o \n e contando o seu tamanho. */
     fgets(line, 100, arq);
     tam = strlen(line);
-    //Procurando a posição no arquivo (o +1 provavelmente é por causa do \r).
+    /* Procurando a posição no arquivo (o +1 provavelmente é por causa do \r). */
     fseek(arq, (tam + 1) * linha, SEEK_SET);
-    //Lendo os dados da posição.
+    /* Lendo os dados da posição. */
     fscanf(arq, "%d %s %s %lld", &reg.mat, reg.nome, reg.dataNasc, &reg.cpf);
     printf("\nNome: %s -- Cpf: %lld -- Data de Nascimento: %s -- Matrícula: %d", reg.nome, reg.cpf, reg.dataNasc, reg.mat);
 }
 
 /*
-Descrição: Função que faz a busca diretamente no arquivo fornecido a matrícula fornecida.
-Entrada: Ponteiro para o arquivo, inteiro da matrícula que se deseja buscar.
-Saída: Nada.
+Descrição: função que faz a busca diretamente no arquivo fornecido a matrícula fornecida.
+Entrada: ponteiro para o arquivo, inteiro da matrícula que se deseja buscar.
+Saída: nada.
 */
 void buscaDireta(FILE *arq, int mat) {
     registro reg;
-    //Setando condição de parada.
+    /* Setando condição de parada. */
     reg.mat = -1;
-    //Colocando o ponteiro no início.
+    /* Colocando o ponteiro do arquivo no início. */
     rewind(arq);
-    //Enquanto o arquivo não estiver no fim e ainda não tiver encontrado a matrícula, continue procurando.
+    /* Procurando posição no arquivo. */
     while(!feof(arq) && reg.mat != mat) {
         fscanf(arq, "%d %s %s %lld", &reg.mat, reg.nome, reg.dataNasc, &reg.cpf);
         if(reg.mat == mat) {
@@ -63,23 +71,21 @@ void buscaDireta(FILE *arq, int mat) {
 
 int main(void) {
     arvore *arv;
-    FILE *arq, *res;
+    FILE *arq, *res = NULL; //Arquivo do dataset, e arquivo dos resultados.
     metricas direta, indice;
     clock_t inicio, fim;
-    int resp, linha, mat, tamDat = 0, aux;
+    int resp, linha, mat, tamDat = 0, aux; //Resposta do usuário, linha do registro no arquivo, matrícula que será removida, ou buscada, tamanho do dataset, auxiliar para retornos de funções e operações de média.
     double tempo;
-    char dataset[50], path[100] = "Datasets\\";
-    char line[100], pathR[100] = "Resultados\\";
-
-    /* -- Identificando o Dataset -- */
-
+    char dataset[50], path[190] = "C:\\Users\\Henrique Zucato\\Documents\\01 - Universidade\\3 - Periodo\\CTCO02 - Algoritmos e Estruturas de Dados II\\10 - Arvore B\\Datasets\\";
+    char line[100], pathR[190] = "C:\\Users\\Henrique Zucato\\Documents\\01 - Universidade\\3 - Periodo\\CTCO02 - Algoritmos e Estruturas de Dados II\\10 - Arvore B\\Resultados\\";
+    /* Identificando o dataset. */
     printf("\nVocê deseja criar um novo dataset?\nResposta (Sim - 1, Não - 0): ");
     scanf("%d", &resp);
     printf("\nDigite o nome do dataset (com o .txt): ");
     scanf(" %s", dataset);
-    strcat(path, dataset);
+    strcat(path, dataset); //Concatenando o nome do arquivo com o caminho para a pasta dele.
     if(resp) {
-        //Criando um novo dataset, com a quantidade de linhas fornecida pelo usuário.
+        /* Criando um novo dataset, com a quantidade de linhas fornecida pelo usuário. */
         printf("\nDigite quantas linhas você deseja no dataset: ");
         scanf("%d", &tamDat);
         arq = fopen(path, "w+");
@@ -89,22 +95,19 @@ int main(void) {
         }
         criaDataset(arq, tamDat);
     }else {
-        //Abrindo um dataset existente.
+        /* Abrindo um dataset existente. */
         arq = fopen(path, "r");
         if(!arq) {
             printf("\nNão foi possível ler o arquivo.");
             return 1;
         }
-        //Contando quantas linhas tem o arquivo.
+        /* Contando quantas linhas tem o arquivo. */
         while(fgets(line, 100, arq)) {
             tamDat++;
         }
     }
-
-    /* -- Iniciando B-Tree -- */
-
-    //Criando a árvore.
-    printf("\nDigite a ordem da B-Tree (somente ordens pares): ");
+    /* Iniciando árvore-b */
+    printf("\nDigite a ordem da árvore-b (somente ordens pares): ");
     scanf("%d", &resp);
     if(resp % 2 != 0) {
         printf("\nOrdem não par!");
@@ -114,18 +117,19 @@ int main(void) {
     if(!arv) {
         return 1;
     }
-
-    //Menu.
+    /* Menu. */
     printf("\nMENU:\n1 - Criar indices.\n2 - Remover.\n3 - Busca.\n4 - Imprimir.\n5 - Sair.\nSua resposta: ");
     scanf("%d", &resp);
     while(resp != 5) {
         switch (resp) {
             case 1:
+                /* Inserindo elementos do dataset na árvore. */
                 if(!processaCarga(arv, arq)) {
                     printf("\nErro na criação da árvore.");
                 }
-            break;
+                break;
             case 2:
+                /* Removendo elemento da árvore. */
                 printf("\nInforme qual matrícula você deseja remover: ");
                 scanf("%d", &mat);
                 aux = deleta(arv, mat);
@@ -139,10 +143,11 @@ int main(void) {
                 printf("\n");
                 break;
             case 3:
+                /* Buscando elemento na árvore. */
                 printf("\n1 - Busca específica.\n2 - Elementos aleatórios.\nSua resposta: ");
                 scanf("%d", &resp);
                 if(resp == 1) {
-                    //Realizando uma busca específica, aqui não importa as métricas de tempo.
+                    /* Realizando uma busca específica, aqui não importa as métricas de tempo. */
                     printf("\nInforme qual matrícula você deseja buscar: ");
                     scanf("%d", &mat);
                     linha = busca(arv, mat);
@@ -156,19 +161,18 @@ int main(void) {
                     }
                     printf("\n");
                 }else {
-                    //Realizando buscas aleatórias, aqui as métricas de tempo importam.
+                    /* Realizando buscas aleatórias, aqui as métricas de tempo importam. */
                     srand(time(NULL));
-                    //Setando as métricas.
+                    /* Setando as métricas. */
                     direta.media = direta.tempoMax = direta.tempoMin = 0;
                     indice.media = indice.tempoMax = indice.tempoMin = 0;
-                    //O aux serve para corrigir na hora de calcular a média (caso um elemento não seja encontrado.)
-                    aux = 0;
+                    aux = 0; //Servirá para corrigir na hora de calcular a média (caso um elemento não seja encontrado.)
                     printf("\nInforme quantas buscas aleatórias você deseja buscar: ");
                     scanf("%d", &resp);
                     for(int i = 0; i < resp; i++) {
-                        //Gerando matrícula aleatória.
+                        /* Gerando matrícula aleatória. */
                         mat = rand() % tamDat;
-                        //Início da busca pela árvore.
+                        /* Início da busca pela árvore. */
                         inicio = clock();
                         linha = busca(arv, mat);
                         if(linha == -1) {
@@ -178,7 +182,7 @@ int main(void) {
                         }else {
                             buscaIndice(arq, linha);
                             fim = clock();
-                            //Fim da busca pela árvore, atualizando métricas.
+                            /* Fim da busca pela árvore, atualizando métricas. */
                             tempo = (fim - inicio)/(CLOCKS_PER_SEC/1000);
                             if(tempo > indice.tempoMax) {
                                 indice.tempoMax = tempo;
@@ -186,11 +190,11 @@ int main(void) {
                                 indice.tempoMin = tempo;
                             }
                             indice.media += tempo;
-                            //Início da busca direta.
+                            /* Início da busca direta. */
                             inicio = clock();
                             buscaDireta(arq, mat);
                             fim = clock();
-                            //Fim da busca direta, atualizando métricas.
+                            /* Fim da busca direta, atualizando métricas. */
                             tempo = (fim - inicio)/(CLOCKS_PER_SEC/1000);
                             if(tempo > direta.tempoMax) {
                                 direta.tempoMax = tempo;
@@ -200,13 +204,13 @@ int main(void) {
                             direta.media += tempo;
                         }
                     }
-                    //Fazendo a média.
+                    /* Fazendo a média. */
                     indice.media /= resp - aux;
                     direta.media /= resp - aux;
-                    //Escrevendo os resultados em um arquivo.
+                    /* Escrevendo os resultados em um arquivo. */
                     printf("\nBuscas realizadas!\nDigite o nome do arquivo de resultados (com o .txt): ");
                     scanf(" %s", dataset);
-                    strcat(pathR, dataset);
+                    strcat(pathR, dataset); //Concatenando o nome do arquivo com o caminho para a pasta dele.
                     res = fopen(pathR, "w");
                     if(!res) {
                         printf("\nErro ao criar o arquivo de resultados.");
@@ -216,16 +220,22 @@ int main(void) {
                     }
                     fclose(res);
                 }
-            break;
+                break;
             case 4:
+                /* Imprimindo a árvore. */
                 imprimeArvore(getRaiz(arv), 0);
-            break;
+                break;
             default:
-            break;
+                break;
         }
+        /* Menu. */
         printf("\nMENU:\n1 - Criar indices.\n2 - Remover.\n3 - Busca.\n4 - Imprimir.\n5 - Sair.\nSua resposta: ");
         scanf("%d", &resp);
     }
+    /* Fechando arquivos. */
     fclose(arq);
+    if(res) {
+        fclose(res);
+    }
     return 0;
 }
