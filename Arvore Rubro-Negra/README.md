@@ -41,15 +41,15 @@ Nesse último caso devemos fazer o pai ficar preto, o avô vermelho, e uma rota�
 Para elementos avaliados a esquerda do avô:
 | Caso | Cor do Tio | Filho | Ações |
 | ---- | ---------- | ----- | ----- |
-| 1 | Vermelho | Direita ou Esquerda | Pai e Tio pretos \ Avô vermelho \ nova avaliação em cima do avô. |
-| 2 | Preto | Direita | Rotação à esquerda no Pai \ Pai se torna novo elemento avaliado \ Caso 3 |
-| 3 | Preto | Esquerda | Pai preto \ Avô vermelho \ Rotação à direita no avô |
+| 1 | Vermelho | Direita ou Esquerda | Pai e Tio pretos / Avô vermelho / nova avaliação em cima do avô. |
+| 2 | Preto | Direita | Rotação à esquerda no Pai / Pai se torna novo elemento avaliado / Caso 3 |
+| 3 | Preto | Esquerda | Pai preto / Avô vermelho / Rotação à direita no avô |
 | 1,2,3 | - | - | Raiz preto |
 
 Para elementos avaliados a direita do avô:
 | Caso | Cor do Tio | Filho | Ações |
 | ---- | ---------- | ----- | ----- |
-| 1 | Vermelho | Direita ou Esquerda | Pai e Tio pretos \ Avô vermelho \ nova avaliação em cima do avô. |
-| 2 | Preto | Direita | Rotação à direita no Pai \ Pai se torna novo elemento avaliado \ Caso 3 |
-| 3 | Preto | Esquerda | Pai preto \ Avô vermelho \ Rotação à esquerda no avô |
+| 1 | Vermelho | Direita ou Esquerda | Pai e Tio pretos / Avô vermelho / nova avaliação em cima do avô. |
+| 2 | Preto | Direita | Rotação à direita no Pai / Pai se torna novo elemento avaliado / Caso 3 |
+| 3 | Preto | Esquerda | Pai preto / Avô vermelho / Rotação à esquerda no avô |
 | 1,2,3 | - | - | Raiz preto |
