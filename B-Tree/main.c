@@ -76,8 +76,8 @@ int main(void) {
     clock_t inicio, fim;
     int resp, linha, mat, tamDat = 0, aux; //Resposta do usuário, linha do registro no arquivo, matrícula que será removida, ou buscada, tamanho do dataset, auxiliar para retornos de funções e operações de média.
     double tempo;
-    char dataset[50], path[190] = "C:\\Users\\Henrique Zucato\\Documents\\01 - Universidade\\3 - Periodo\\CTCO02 - Algoritmos e Estruturas de Dados II\\10 - Arvore B\\Datasets\\";
-    char line[100], pathR[190] = "C:\\Users\\Henrique Zucato\\Documents\\01 - Universidade\\3 - Periodo\\CTCO02 - Algoritmos e Estruturas de Dados II\\10 - Arvore B\\Resultados\\";
+    char dataset[50], path[190] = "path";
+    char line[100], pathR[190] = "path";
     /* Identificando o dataset. */
     printf("\nVocê deseja criar um novo dataset?\nResposta (Sim - 1, Não - 0): ");
     scanf("%d", &resp);
