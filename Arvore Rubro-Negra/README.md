@@ -29,13 +29,13 @@ No final da correção, a raiz é colorida de preto para garantir a propriedade.
 > Esses casos, bem como as soluções, se espelham dependendo do lado da árvore.
 
 ### Caso 1
-Nesse caso devemos fazer o pai e o tio ficarem pretos, o avô ficar vermelho, e por fim analisar o avô recursivamente.
+Neste caso devemos fazer o pai e o tio ficarem pretos, o avô ficar vermelho, e por fim analisar o avô recursivamente.
 
 ### Caso 2
-Nesse caso devemos fazer uma rotação para à esquerda no pai, que irá se tornar o elemento avaliado, e iremos ao caso 3.
+Neste caso devemos fazer uma rotação para à esquerda no pai, que irá se tornar o elemento avaliado, e iremos ao caso 3.
 
 ### Caso 3
-Nesse último caso devemos fazer o pai ficar preto, o avô vermelho, e uma rotação à direita no avô.
+Neste último caso devemos fazer o pai ficar preto, o avô vermelho, e uma rotação à direita no avô.
 
 ### Resumindo
 Para elementos avaliados a esquerda do avô:
@@ -53,3 +53,47 @@ Para elementos avaliados a direita do avô:
 | 2 | Preto | Direita | Rotação à direita no Pai / Pai se torna novo elemento avaliado / Caso 3 |
 | 3 | Preto | Esquerda | Pai preto / Avô vermelho / Rotação à esquerda no avô |
 | 1,2,3 | - | - | Raiz preto |
+
+## Desbalanceamento na remoção
+Como sempre, a remoção é sempre um pouco mais complexo do que a inserção. Na remoção devemos pensar na cor do elemento que estamos removendo, pois na remoção de um nó vermelho nenhuma propriedade é quebrada, mas por outro lado, a remoção de um nó preto pode quebrar 3 propriedades, a primeira é a da raiz ser preta, a segunda é um nó vermelho ter somente filhos pretos, e a terceira é a quantidade de nós pretos ser a mesma nos diferentes caminhos até a raiz.
+
+Com isso, temos quatro casos para se analisar (8 se considerarmos que é espelhado):
+1. Irmão é vermelho.
+2. Irmão é preto, e ambos os seus filhos são pretos.
+3. Irmão é preto, e seu filho esquerdo é vermelho e o direito é preto.
+4. Irmão é preto, e seu filho direito é vermelho.
+
+### Caso 1
+Neste caso, o irmão se torna preto, o pai se torna vermelho, rotação à esquerda no pai, levando aos outros casos.
+
+### Caso 2
+Neste caso, o irmão se torna vermelho, e analisa o pai recursivamente.
+
+### Caso 3
+Neste caso, o irmão se torna vermelho, e rotação à direita no irmão, levando ao caso 4.
+
+### Caso 4
+Neste caso, o irmão fica na cor do pai, o pai do elemento se torna pret, o filho direito do irmão também se torna preto, e por fim rotação à esquerda no pai do elemento.
+
+### Resumindo
+Para elementos avaliados a esquerda do pai:
+| Situação | Elemento | Sucessor | Irmão | Ações |
+| -------- | -------- | -------- | ----- | ----- |
+| 1 | Vermelho | - | - | Nada |
+| 2 | Preto | Vermelho | - | Sucessor preto |
+| 3 | Preto | Preto | Vermelho | Irmão preto / Pai vermelho / Rotação à esquerda no pai / Irmão passa a ser o filho direito do pai / Casos 2,3 ou 4 |
+| 3 | Preto | Preto | Preto e ambos os filhos pretos | Irmão vermelho / Pai preto |
+| 3 | Preto | Preto | Preto e filho da esquerda vermelho e direita preto | Filho esquerdo do irmão preto / Irmão vermelho / Rotação à direita no irmão / Caso 4 |
+| 3 | Preto | Preto | Preto e filho direito vermelho | Irmão cor do pai / Pai preto / Filho direito do irmão preto / Rotação à esquerda no pai |
+
+Para elementos avaliados a direita do pai:
+| Situação | Elemento | Sucessor | Irmão | Ações |
+| -------- | -------- | -------- | ----- | ----- |
+| 1 | Vermelho | - | - | Nada |
+| 2 | Preto | Vermelho | - | Sucessor preto |
+| 3 | Preto | Preto | Vermelho | Irmão preto / Pai vermelho / Rotação à direita no pai / Irmão passa a ser o filho esquerdo do pai / Casos 2,3 ou 4 |
+| 3 | Preto | Preto | Preto e ambos os filhos pretos | Irmão vermelho / Pai preto |
+| 3 | Preto | Preto | Preto e filho da direita vermelho e esquerda preto | Filho direito do irmão preto / Irmão vermelho / Rotação à esquerda no irmão / Caso 4 |
+| 3 | Preto | Preto | Preto e filho esquerdo vermelho | Irmão cor do pai / Pai preto / Filho esquerdo do irmão preto / Rotação à direita no pai |
+
+
