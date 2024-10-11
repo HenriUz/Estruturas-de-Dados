@@ -13,7 +13,6 @@ Descrição: implementação das funções e estruturas da pilha.
 
 struct Pilha{
     Elemento *topo; //Elemento que está no topo da pilha.
-    int quantidade; //Quantidade de elementos na pilha.
     int erro; //Será setado para 1 caso a pilha esteja vazia na operação de pop.
 };
 
@@ -31,7 +30,6 @@ Pilha *criaPilha() {
     }
     /* Inicializando valores. */
     p->topo = NULL;
-    p->quantidade = 0;
     p->erro = 0;
     return p;
 }
@@ -40,8 +38,8 @@ int getErro(Pilha *p) {
     return p->erro;
 }
 
-int getQuantidade(Pilha *p) {
-    return p->quantidade;
+int pilhaVazia(Pilha *p) {
+    return p->topo == NULL;
 }
 
 int push(Pilha *p, int valor) {
@@ -54,7 +52,6 @@ int push(Pilha *p, int valor) {
     top->prox = p->topo;
     /* Alterando valores da pilha. */
     p->topo = top;
-    p->quantidade++;
     p->erro = 0;
     return 1;
 }
@@ -62,7 +59,7 @@ int push(Pilha *p, int valor) {
 int pop(Pilha *p) {
     int valor; //Valor que será retornado.
     Elemento *top; //Topo da pilha que será liberado.
-    if(!p->quantidade) {
+    if(pilhaVazia(p)) {
         /* Pilha vazia, setando variável de erro e retornando. */
         p->erro = 1;
         return 0;
@@ -72,7 +69,6 @@ int pop(Pilha *p) {
     top = p->topo;
     /* Modificando a pilha. */
     p->topo = p->topo->prox;
-    p->quantidade--;
     p->erro = 0;
     /* Liberando o retornando. */
     free(top);
