@@ -29,11 +29,11 @@ Saída: inteiro do erro.
 int getErro(Pilha *p);
 
 /*
-Descrição: função responsável por retornar a quantidade de elementos na Pilha.
-Entrada: ponteiro para a Pilha.
-Saída: inteiro da quantidade.
+Descrição: função que retorna o estado da pilha.
+Entrada: ponteiro para a pilha.
+Saída: 1 - vazia, 0 - com elementos.
 */
-int getQuantidade(Pilha *p);
+int pilhaVazia(Pilha *p);
 
 /*
 Descrição: função responsável por empilhar o valor passado na pilha informada.
