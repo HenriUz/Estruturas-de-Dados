@@ -33,7 +33,7 @@ int main(void) {
     }
     /* Desempilhando e informando ao usuário. */
     printf("\nValor em binário: ");
-    while(getQuantidade(p)) {
+    while(!pilhaVazia(p)) {
         printf("%d", pop(p));
     }
     /* Liberando memória. */
