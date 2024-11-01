@@ -5,7 +5,10 @@ Pilha é uma das estruturas de dados mais simples que existem, mas o domínio so
 > Pela pilha ser um estrutura simples, ela acaba sendo alvo de diversos ataques como `Ret2win` ou `Ret2libc`. Claro que há diversas proteções, como `PIE` e `NX`, que são implementadas na compilação de um código, mas fique sempre atento se seu código permite um estouro de buffer ou não.
 
 ## Objetivo
-Este código tem o objetivo de mostrar como usar uma pilha para converter número decimais positivos para binário. Porém a estrutura de pilha implementada funciona para qualquer inteiro. 
+Este código tem o objetivo de mostrar como usar uma pilha para converter número decimais positivos para binário. Porém, ela pode ser usada para para qualquer inteiro.
+
+> [!important]
+> Caso um erro ocorra na função de desempilhar (`pop()`) a variável `erro` da estrutura da pilha será setada como 1, e a função retornará 0.
 
 ## Funcionamento
 Como o próprio nome diz, essa estrutura simula uma pilha. Aqui as operações possíveis são empilhar (colocar algo no topo) e desempilhar (tirar algo do topo), ambas de complexidade `O(1)`. Note que todas as operações são feitas à partir do topo, então a primeira coisa para se ter em mente é ter o controle sobre quem é o topo da pilha.
