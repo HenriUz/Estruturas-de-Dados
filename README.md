@@ -1,11 +1,13 @@
 # Estruturas de Dados
 ## Sobre
-Este repositório tem o objetivo de armazenar implementações, na linguagem C, das estruturas de dados mais conhecidas. Além de cada pasta conter a implementação da estrutura em si, elas também contém uma leve explicação sobre a estrutura.
+Este repositório tem a função de armazenar algumas das estruturas de dados existentes. Neste caso, todas elas foram desenvolvidas na linguagem **C**.
+
+Além de apenas armazar as estruturas de dados, também há uma explicação sobre o que elas são e como funcionam.
 
 ## Organização
-- Arvore AVL: esta pasta contém a implementação da árvore binária balanceada AVL.
-- Arvore Binaria: esta pasta contém a implementação de uma árvore binária sem balanceamento comum.
-- Árvore Rubro-Negra: esta pasta contém a implementação de uma árvore rubro-negra.
-- B-Tree: esta pasta contém a implementação da árvore-b, para ordem par. Além disso, essa pasta é um benchmarking comparando o tempo de acesso usando a árvore-b e usando um arquivo de texto diretamente.
-- Fila: esta pasta contém uma implementação de uma fila para inteiros, usando a heap para armazenar cada elemento. Também há uma leve interface, por terminal, para interagir com a fila.
-- Pilha: esta pasta contém a implementação de uma pilha para inteiros, usando a heap para armazenar cada elemento. Também contém a implementação do uso da pilha para converter decimais inteiros positivos para binário. 
+- [Arvore AVL](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Arvore%20AVL): implementação da Árvore AVL.
+- [Arvore Binaria](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Arvore%20Binaria): implementação de uma Árvore Binária sem balanceamento.
+- [Arvore Rubro-Negra](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Arvore%20Rubro-Negra): implementação da Árvore Rubro-Negra.
+- [B-Tree](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/B-Tree): implementação de uma B-Tree para ordens pares, e benchmarking do tempo de busca em um arquivo usando a B-Tree e não usando ela.
+- [Fila](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Fila): implementação de uma fila.
+- [Pilha](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Pilha): implementação de uma pilha. 
