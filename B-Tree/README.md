@@ -6,7 +6,7 @@ A consequência disso tudo é que, em geral, a B-Tree possui grande largura e po
 ## Propriedades
 
 - Ordem: quantidade máxima de filhos que uma página pode conter (dependendo da paridade, a ordem de algumas operações mudam).
-- Grau mínimo (t): define os limites inferiores e superiores sobre o número de chaves (número máximo de chaves = $2*t - 1$, número mínimo de chaves = $t - 1$).
+- Grau mínimo (t): define os limites inferiores e superiores sobre o número de chaves (número máximo de chaves = $`2*t - 1`$, número mínimo de chaves = $`t - 1`$).
 
 ## Objetivo
 Este repositório tem o objetivo de armazenar uma B-Tree funcional para ordens pares, além de também conter a implementação de testes comparativos entre o tempo de busca em um arquivo olhando linha por linha (direto) e usando a linha armazenada na B-Tree (índice).
