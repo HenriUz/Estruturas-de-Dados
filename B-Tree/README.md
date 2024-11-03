@@ -16,4 +16,4 @@ Este repositório tem o objetivo de armazenar uma B-Tree funcional para ordens p
 - Datasets: datasets para os testes (o número antes do `.txt` indica a quantidade de elementos).
 - ES: implementação dos geradores de datasets.
 - Resultados: resultados dos testes (o número antes do `-` indica qual dataset foi utilizado e o número após indica quantas buscas foram realizadas).
-- main.c: implementação de uma interface para o usuário gerenciar a B-Tree.
+- main.c: implementação de uma interface por terminal para o gerenciamento da B-Tree e realização dos testes.
