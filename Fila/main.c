@@ -34,16 +34,16 @@ int main(void) {
                 break;
             case 2:
                 /* Removendo. */
-                elemento = removeFila(f);
-                if(!elemento && filaVazia(f)) {
-                    printf("\nNenhum elemento removido, fila está vazia.");
-                }else {
+                if(!filaVazia(f)) {
+                    elemento = removeFila(f);
                     printf("\nO elemento %d foi removido com sucesso.", elemento);
+                }else {
+                    printf("\nNenhum elemento removido, fila está vazia.");
                 }
                 break;
             default:
                 /* Padrão. */
-                printf("\nResposta invalida!");
+                printf("\nResposta inválida!");
         }
         /* Menu. */
         printf("\nMenu:\n1. Inserir.\n2. Remover.\n3. Sair.\nResposta: ");
