@@ -1,16 +1,19 @@
 # B-Tree
-São uma generalização das árvores binárias de busca, pois cada nó de uma árvore binária armazena uma única chave de busca, enquanto as árvores B armazenam um número maior de chaves em cada nó, ou no termo mais usual para essa árvore, em cada página. As árvores B são árvores de pesquisa balanceadas projetadas para funcionar bem em discos magnéticos ou outros dispositivos de armazenamento secundário de acesso direto, sendo otimizadas para minizar operações de E/S do disco. A ideia é fazer com que cada nó da árvore contenha tanta informação quanto a que cabe num bloco de disco. 
+São uma generalização das árvores binárias de busca, pois cada nó de uma árvore binária armazena uma única chave de busca, enquanto as B-Tree armazenam um número maior de chaves em cada nó, ou no termo mais usual para essa árvore, em cada página. As B-Tree são árvores de pesquisa balanceadas projetadas para funcionar bem em discos magnéticos ou outros dispositivos de armazenamento secundário de acesso direto, sendo otimizadas para minizar operações de E/S do disco. A ideia é fazer com que cada nó da árvore contenha tanta informação quanto a que cabe num bloco de disco. 
 
-A consequência disso tudo é que, em geral, a árvore B possui grande largura e pouca profundidade, diminuindo o número de E/S do disco.
+A consequência disso tudo é que, em geral, a B-Tree possui grande largura e pouca profundidade, diminuindo o número de E/S do disco.
 
-Algumas propriedades da árvore B são a ordem e o grau mínimo. A ordem é a quantidade máxima de filhos que uma página pode conter, e o grau mínimo (t) é um inteiro que define os limites inferiores e superiores sobre o número de chaves (número máximo de chaves = 2t – 1, número mínimo de chaves = t-1). A paridade da ordem faz com que seja necessário mudar a ordem de algumas funções.
+## Propriedades
+
+- Ordem: quantidade máxima de filhos que uma página pode conter (dependendo da paridade, a ordem de algumas operações mudam).
+- Grau mínimo (t): define os limites inferiores e superiores sobre o número de chaves (número máximo de chaves = $2*t - 1$, número mínimo de chaves = $t - 1$).
 
 ## Objetivo
-O objetivo deste repositório é mostrar a estrutura de dados da B-Tree funcionando em ordens pares, e realizar testes comparativos entre o tempo de busca em um arquivo de texto olhando linha por linha (direto) e usando a linha armazenada na B-Tree (indice).
+Este repositório tem o objetivo de armazenar uma B-Tree funcional para ordens pares, além de também conter a implementação de testes comparativos entre o tempo de busca em um arquivo olhando linha por linha (direto) e usando a linha armazenada na B-Tree (índice).
 
 ## Organização
-- ArvoreB: Contém os arquivos `.c` e `.h` da estrutura de dados da árvore b.
-- Datasets: Contém os arquivos de texto usados como datasets para o teste. O número antes do `.txt` indica a quantidade de elementos.
-- ES: Contém os arquivos `.c` e `.h` do código responsável por gerar os datasets.
-- Resultados: Contém os arquivos de texto que armazenam os resultados dos testes. O número antes do `-` indica qual dataset foi utilizado e o número após indica quantas buscas foram realizadas.
-- main.c: Código responsável por tratar as entradas do usuário e os resultados das operações.
+- ArvoreB: implementação da B-Tree.
+- Datasets: datasets para os testes (o número antes do `.txt` indica a quantidade de elementos).
+- ES: implementação dos geradores de datasets.
+- Resultados: resultados dos testes (o número antes do `-` indica qual dataset foi utilizado e o número após indica quantas buscas foram realizadas).
+- main.c: implementação de uma interface para o usuário gerenciar a B-Tree.
