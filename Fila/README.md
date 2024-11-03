@@ -7,7 +7,7 @@ Mesmo sendo uma estrutura simples, seu domínio é muito importante, pois divers
 Este código tem o objetivo de mostrar o funcionamento de uma fila por meio da implementação de uma interface por terminal.
 
 ## Funcionamento
-As operações principais de uma fila são enfileirar (colocar algo no fim da fila) e desenfileirar (tirar algo do início), perceba que as operações trabalham em lados opostos da fila, fazendo ser necessário ter o controle sobre o início e fim da fila. É interessante notar que ter o controle sobre os dois lados da fila garante que ambas as operações sejam de complexidade `O(1)`.
+As operações principais de uma fila são enfileirar (colocar algo no fim) e desenfileirar (tirar algo do início), perceba que as operações trabalham em lados opostos da fila, fazendo-se necessário ter o controle sobre o início e o fim. É interessante notar que ter o controle sobre ambos os lados da fila garante que ambas as operações sejam de complexidade `O(1)`.
 
 > [!important]
 > A fila implementada é para inteiros, então qualquer número inteiro pode ser devolvido na função `removeFila(fila *f)`. Foi estabelecido que a função irá retornar 0 caso a fila esteja vazia, então é necessário verificar a situação da fila quando um 0 for retornado.
