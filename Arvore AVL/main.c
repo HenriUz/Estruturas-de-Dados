@@ -30,7 +30,7 @@ int main(void) {
                 printf("\nDigite o índice que será inserido: ");
                 scanf("%d", &indice);
                 printf("\nDigite o caractere que será inserido: ");
-                scanf(" %c", &caractere);
+                scanf(" %1c", &caractere);
                 if(!insere(arv, indice, caractere)) {
                     printf("\nErro na inserção.\n");
                 }else {
@@ -61,7 +61,7 @@ int main(void) {
                 }
                 break;
             case 4:
-                /* Imprimindo árvore. */.
+                /* Imprimindo árvore. */
                 printf("\nQuantidade de elementos na árvore: %d", getNumElementos(arv));
                 preOrdem(getRaiz(arv));
                 printf("\n");
