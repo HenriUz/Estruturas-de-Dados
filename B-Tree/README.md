@@ -39,7 +39,7 @@ A inserção necessita de operações adicionais porque 3 casos podem acontecer.
 
 Além disso, a operação split varia de acordo com a ordem da árvore. Se a ordem for par, há um número ímpar de elementos, e a divisão da folha acontece facilmente. Se a ordem for ímpar, há um número par de elementos, causando uma dificuldade na divisão da folha (solução é implementar um espaço extra em uma página). Por fim, há uma variação que realiza o split enquanto desce na árvore (preemptive split).
 
-A remoção é parecida com as remoções das árvores binárias, se o elemento está em uma folha, remove ele, se ele estiver em uma página intermediária, remove por cópia. Mas é necessário ficar espero, pois se a folha ficar menos do que $t - 1$ elementos, é necessário reorganizar a árvore, juntando folhas, ou emprestando elementos.
+A remoção é parecida com as remoções das árvores binárias, se o elemento está em uma folha, remove ele, se ele estiver em uma página intermediária, remove por cópia. Mas é necessário ficar esperto, pois se a folha ficar com menos do que $t - 1$ elementos, é necessário reorganizar a árvore, juntando folhas, ou emprestando elementos.
 
 ## Objetivo
 Este repositório tem o objetivo de armazenar uma B-Tree funcional para ordens pares, além de também conter a implementação de testes comparativos entre o tempo de busca em um arquivo olhando linha por linha (direto) e usando a linha armazenada na B-Tree (índice).
