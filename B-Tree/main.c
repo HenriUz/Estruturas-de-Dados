@@ -42,11 +42,13 @@ void buscaIndice(FILE *arq, const int linha) {
     /* Lendo uma linha até o \n e contando o seu tamanho. */
     fgets(line, 100, arq);
     tam = (int)strlen(line);
-    /* Procurando a posição no arquivo (o +1 provavelmente é por causa do \r). */
-    fseek(arq, (tam + 1) * linha, SEEK_SET);
+    /* Procurando a posição no arquivo. */
+    //Faça (tam + 1) * linha caso esteja compilando no Windows, pois o separador de linha nele é \r\n.
+    fseek(arq, tam * linha, SEEK_SET);
     /* Lendo os dados da posição. */
     fscanf(arq, "%d %s %s %lld", &reg.mat, reg.nome, reg.dataNasc, &reg.cpf);
-    printf("\nNome: %s -- Cpf: %lld -- Data de Nascimento: %s -- Matrícula: %d", reg.nome, reg.cpf, reg.dataNasc, reg.mat);
+    //Tire o comentário caso queira ver o resultado pego na linha.
+    //printf("\nNome: %s -- Cpf: %lld -- Data de Nascimento: %s -- Matrícula: %d", reg.nome, reg.cpf, reg.dataNasc, reg.mat);
 }
 
 /*
@@ -64,7 +66,8 @@ void buscaDireta(FILE *arq, const int mat) {
     while(!feof(arq) && reg.mat != mat) {
         fscanf(arq, "%d %s %s %lld", &reg.mat, reg.nome, reg.dataNasc, &reg.cpf);
         if(reg.mat == mat) {
-            printf("\nNome: %s -- Cpf: %lld -- Data de Nascimento: %s -- Matrícula: %d", reg.nome, reg.cpf, reg.dataNasc, reg.mat);
+            //Tire o comentário caso queira ver o resultado pego na linha.
+            //printf("\nNome: %s -- Cpf: %lld -- Data de Nascimento: %s -- Matrícula: %d", reg.nome, reg.cpf, reg.dataNasc, reg.mat);
         }
     }
 }
@@ -183,7 +186,7 @@ int main(void) {
                             buscaIndice(arq, linha);
                             fim = clock();
                             /* Fim da busca pela árvore, atualizando métricas. */
-                            tempo = (fim - inicio)/(CLOCKS_PER_SEC/1000);
+                            tempo = (double)(fim - inicio)/(CLOCKS_PER_SEC/1000);
                             if(tempo > indice.tempoMax) {
                                 indice.tempoMax = tempo;
                             }else if(tempo < indice.tempoMin || indice.tempoMin == 0) {
@@ -195,7 +198,7 @@ int main(void) {
                             buscaDireta(arq, mat);
                             fim = clock();
                             /* Fim da busca direta, atualizando métricas. */
-                            tempo = (fim - inicio)/(CLOCKS_PER_SEC/1000);
+                            tempo = (double)(fim - inicio)/(CLOCKS_PER_SEC/1000);
                             if(tempo > direta.tempoMax) {
                                 direta.tempoMax = tempo;
                             }else if(tempo < direta.tempoMin || direta.tempoMin == 0) {
