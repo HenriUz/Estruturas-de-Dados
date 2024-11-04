@@ -1,6 +1,7 @@
 # Árvore Binária de Busca
-Servem para armazenar dados na memória principal, e são estruturas muito eficientes para a busca de dados. Essas árvores são representadas por um conjunto finito de nós que ou está vazia ou consiste de um elemento chamado raiz mais os elementos das subárvores esquerda e direita da raiz.
-Dessa forma cada nó contém uma chave, podendo ser um estrutura caso queira armazenar mais dados, e no máximo duas subárvores.
+Servem para armazenar dados na memória principal, e são estruturas muito eficientes para representar relações de hierarquia e para buscar dados. 
+
+Essas árvores são representadas por um conjunto finito de nós que ou está vazia ou consiste de um elemento chamado raiz mais os elementos das subárvores esquerda e direita da raiz. Dessa forma cada nó contém uma chave e no máximo duas subárvores.
 
 ## Propriedades
 - Todos os elementos da subárvore esquerda possuem elementos menores do que a raiz.
@@ -17,3 +18,17 @@ Dessa forma cada nó contém uma chave, podendo ser um estrutura caso queira arm
   
 > [!NOTE]
 > Vale notar que a árvore cheia é a árvore ideal, sua complexidade é O( $\log_2(n)$ ). A quantidade de nós por nível pode ser calculada por $2^{nível}$, e a altura por $\log_2(n+1) - 1$.
+
+## Objetivo
+Este repositório tem o objetivo de mostrar o funcionamento de uma árvore binária comum por meio da implementação de uma interface por terminal.
+
+## Funcionamento
+As operações principais de uma árvore são a inserção (adicionar uma folha), remoção (remover um nó), busca, e impressão da árvore. 
+
+Das 4 operações citadas, a remoção é a que se deve tomar mais cuidado, pois dependendo da quantidade de filhos que o nó possui, a forma de se remover muda. Por exemplo, um nó com nenhum filho é simplesmente removido desvinculando ele do pai, mas um nó com dois filhos é necessário realizar outra estratégia, como cópia de predecessor ou sucessor.
+
+Por fim, a impressão pode ser feita de 3 maneiras:
+
+- Em ordem: imprime subárvore esquerda, depois a raiz, e por fim a subárvore direita.
+- Pré-ordem: imprime a raiz, depois a subárvore esquerda, e por fim a subárvore direita.
+- Pós-ordem: imprime a subárvore direita, depois a raiz, e por fim a subárvore esquerda.
