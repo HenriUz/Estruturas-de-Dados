@@ -1,7 +1,7 @@
 # Árvore Binária de Busca
-Servem para armazenar dados na memória principal, e são estruturas muito eficientes para representar relações de hierarquia e para buscar dados. 
+Serve para armazenar dados na memória principal, é um estrutura muito eficientes para representar relações de hierarquia e para buscar dados. 
 
-Essas árvores são representadas por um conjunto finito de nós que ou está vazia ou consiste de um elemento chamado raiz mais os elementos das subárvores esquerda e direita da raiz. Dessa forma cada nó contém uma chave e no máximo duas subárvores.
+Uma árvore é representada por um conjunto finito de nós que ou está vazio ou consiste de um elemento chamado raiz mais os elementos das subárvores esquerda e direita da raiz. Dessa forma cada nó contém uma chave e no máximo duas subárvores.
 
 ## Propriedades
 - Todos os elementos da subárvore esquerda possuem elementos menores do que a raiz.
