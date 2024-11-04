@@ -20,9 +20,10 @@ A consequência disso tudo é que, em geral, a B-Tree possui grande largura e po
 Uma página na B-Tree contém o número de chaves armazenadas, as chaves, os ponteiros para os filhos, e pode conter uma indicação se é folha ou não. Claro que as páginas folhas podem ser feitas em outra estrutura, mas isso aumentaria a complexidade do código.
 
 ```
-+---+----------+---+----------+---+----------+---+-------------+
-| f |   chave  | f |   chave  | f |   chave  | f | (n), (leaf) |
-+---+----------+---+----------+---+----------+---+-------------+
+(n), (leaf)
++---+----------+---+----------+---+----------+---+
+| f |   chave  | f |   chave  | f |   chave  | f |
++---+----------+---+----------+---+----------+---+
 
 f = ponteiro para o filho.
 n = número de chaves
