@@ -1,7 +1,7 @@
 /*
 main.c
 
-Descrição: programa responsável por lidar com os inputs do usário e por gerenciar as funções da árvore.
+Descrição: programa responsável por lidar com os inputs do usuário e por gerenciar as funções da árvore.
 */
 
 /* --- Includes. --- */
