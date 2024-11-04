@@ -1,7 +1,7 @@
 /*
 ES.c
 
-Descrição: implementação das funções responsávei por criar um dataset.
+Descrição: implementação das funções responsáveis por criar um dataset.
 */
 
 /* --- Includes. --- */
@@ -19,19 +19,19 @@ struct linha {
 
 /* --- Funções --- */
 
-void geraLinha(linha *linha, int seed) {
+void geraLinha(linha *line, int seed) {
     /* Setando a seed. */
     srand(seed);
     /* Aleatorizando a data de nascimento. */
-    linha->dia = (rand() % 31) + 1;
-    linha->mes = (rand() % 12) + 1;
-    linha->ano = (rand() % 75) + 1950;
+    line->dia = (rand() % 31) + 1;
+    line->mes = (rand() % 12) + 1;
+    line->ano = (rand() % 75) + 1950;
     /* Aleatorizando o nome, usando a tabela ascII. */
     for(int i = 0; i < 5; i++) {
-        linha->nome[i] = (char)((rand() % 26) + 97);
+        line->nome[i] = (char)((rand() % 26) + 97);
     }
     /* Aleatorizando o cpf. */
-    linha->cpf = (rand() % 1000000000000) + 10000000000;
+    line->cpf = (rand() % 1000000000000) + 10000000000;
 }
 
 int criaDataset(FILE *arq, int tam) {
