@@ -25,7 +25,7 @@ struct arvore {
 
 /* --- Funções. --- */
 
-no *criaNo(int chave) {
+no *criaNo(const int chave) {
     no *folha = (no*)malloc(sizeof(no));
     if(!folha) {
         return NULL;
@@ -54,15 +54,15 @@ arvore *criaArvore() {
     return arv;
 }
 
-no *getRaiz(arvore *arv) {
+no *getRaiz(const arvore *arv) {
     return arv->sentinela->filhoD;
 }
 
-int getNumElementos(arvore *arv) {
+int getNumElementos(const arvore *arv) {
     return arv->numElementos;
 }
 
-int insere(arvore *arv, int chave) {
+int insere(arvore *arv, const int chave) {
     no *folha = criaNo(chave), *atual = NULL, *pai = NULL;
     if(!folha) {
         return 0;
@@ -97,7 +97,7 @@ int insere(arvore *arv, int chave) {
     return 1;
 }
 
-int deleta(arvore *arv, int chave) {
+int deleta(arvore *arv, const int chave) {
     no *atual, *aux;
     /* Removendo. */
     if(arv->numElementos) {
@@ -173,7 +173,7 @@ int deleta(arvore *arv, int chave) {
     return 0;
 }
 
-void preOrdem(no *elemento) {
+void preOrdem(const no *elemento) {
     if(elemento) {
         printf("Elemento: (%d, %d) - Pai: (%d, %d)\n", elemento->chave, elemento->cor, elemento->pai->chave, elemento->pai->cor);
         preOrdem(elemento->filhoE);
@@ -181,8 +181,8 @@ void preOrdem(no *elemento) {
     }
 }
 
-int buscaElemento(arvore *arv, int chave) {
-    no *elemento = arv->sentinela->filhoD;
+int buscaElemento(const arvore *arv, const int chave) {
+    const no *elemento = arv->sentinela->filhoD;
     /* Buscando elemento. */
     while(elemento && elemento->chave != chave) {
         if(chave < elemento->chave) {
@@ -198,7 +198,7 @@ int buscaElemento(arvore *arv, int chave) {
     return -1;
 }
 
-void analisaInsercao(arvore *arv, no *folha) {
+void analisaInsercao(const arvore *arv, no *folha) {
     no *tio;
     /* Percorrendo a árvore. */
     while(folha->pai != arv->sentinela && folha->pai->cor == RED) {
@@ -258,7 +258,7 @@ void analisaInsercao(arvore *arv, no *folha) {
     arv->sentinela->filhoD->cor = BLACK;
 }
 
-void analisaRemocao(arvore *arv, no *analisado) {
+void analisaRemocao(const arvore *arv, no *analisado) {
     no *aux; //Inicialmente será o sucessor, e depois passará a ser o irmão.
     if(analisado->chave <= analisado->pai->chave) {
         aux = analisado->pai->filhoE;
