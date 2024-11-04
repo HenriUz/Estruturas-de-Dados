@@ -16,4 +16,4 @@ Dessa forma cada nó contém uma chave, podendo ser um estrutura caso queira arm
 - Degenerada: árvore totalmente desbalanceada, tornando-se uma lista de complexidade O(n).
   
 > [!NOTE]
-> Vale notar que a árvore cheia é a árvore ideal, sua complexidade é O($\log_2(n)$). A quantidade de nós por nível pode ser calculada por $2^{nível}$, e a altura por $\log_2(n+1) - 1$.
+> Vale notar que a árvore cheia é a árvore ideal, sua complexidade é O( $\log_2(n)$ ). A quantidade de nós por nível pode ser calculada por $2^{nível}$, e a altura por $\log_2(n+1) - 1$.
