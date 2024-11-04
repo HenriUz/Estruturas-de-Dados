@@ -1,7 +1,7 @@
 /*
 ArvoreRN.c
 
-Descrição: implementação das funções da árvore rubro-negra.
+Descrição: implementação das funções da árvore.
 */
 
 /* --- Includes. --- */
@@ -26,7 +26,6 @@ struct arvore {
 /* --- Funções. --- */
 
 no *criaNo(int chave) {
-    /* Criando nó. */
     no *folha = (no*)malloc(sizeof(no));
     if(!folha) {
         return NULL;
@@ -39,7 +38,6 @@ no *criaNo(int chave) {
 }
 
 arvore *criaArvore() {
-    /* Criando a árvore. */
     arvore *arv = (arvore*)malloc(sizeof(arvore));
     if(!arv) {
         return NULL;
@@ -199,8 +197,6 @@ int buscaElemento(arvore *arv, int chave) {
     }
     return -1;
 }
-
-/* --- Funções de balanceamento da Rubro-Negra. --- */
 
 void analisaInsercao(arvore *arv, no *folha) {
     no *tio;
