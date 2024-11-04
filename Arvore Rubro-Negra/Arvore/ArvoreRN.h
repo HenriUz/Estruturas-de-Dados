@@ -36,14 +36,14 @@ Descrição: função responsável por retornar a raiz da árvore.
 Entrada: ponteiro para a árvore.
 Saída: ponteiro para a raiz.
 */
-no *getRaiz(arvore *arv);
+no *getRaiz(const arvore *arv);
 
 /*
 Descrição: função responsável por retornar a quantidade de elementos na árvore.
 Entrada: ponteiro para a árvore.
 Saída: inteiro da quantidade de elementos.
 */
-int getNumElementos(arvore *arv);
+int getNumElementos(const arvore *arv);
 
 /*
 Descrição: função responsável por inserir um elemento na árvore.
@@ -64,28 +64,28 @@ Descrição: função responsável por imprimir a árvore em pré-ordem.
 Entrada: ponteiro para o nó.
 Saída: nada.
 */
-void preOrdem(no *elemento);
+void preOrdem(const no *elemento);
 
 /*
 Descrição: função responsável por buscar um elemento na árvore.
 Entrada: ponteiro para a árvore, inteiro da chave.
 Saída: cor do elemento - sucesso, −1 - elemento não encontrado.
 */
-int buscaElemento(arvore *arv, int chave);
+int buscaElemento(const arvore *arv, int chave);
 
 /*
 Descrição: função responsável por verificar e corrigir, se necessário, as propriedades da árvore após a inserção.
 Entrada: ponteiro para a árvore, ponteiro para o nó inserido.
 Saída: nada.
 */
-void analisaInsercao(arvore *arv, no *folha);
+void analisaInsercao(const arvore *arv, no *folha);
 
 /*
 Descrição: função responsável por verificar e corrigir, se necessário, as propriedades da árvore após a remoção.
 Entrada: ponteiro para a árvore, ponteiro para o nó removido.
 Saída: nada.
 */
-void analisaRemocao(arvore *arv, no *analisado);
+void analisaRemocao(const arvore *arv, no *analisado);
 
 /*
 Descrição: função responsável por realizar uma rotação para a esquerda no nó informado.
