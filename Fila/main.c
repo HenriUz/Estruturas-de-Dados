@@ -16,10 +16,9 @@ int main(void) {
     fila *f = criaFila();
     int resp; //Resposta do usuário.
     int elemento; //Elemento que será inserido, ou devolvido pela função.
-    /* Menu. */
+    /* Iniciando interface. */
     printf("\nMenu:\n1. Inserir.\n2. Remover.\n3. Sair.\nResposta: ");
     scanf("%d", &resp);
-    /* Loop. */
     while(resp != 3) {
         switch(resp) {
             case 1:
@@ -45,7 +44,6 @@ int main(void) {
                 /* Padrão. */
                 printf("\nResposta inválida!");
         }
-        /* Menu. */
         printf("\nMenu:\n1. Inserir.\n2. Remover.\n3. Sair.\nResposta: ");
         scanf("%d", &resp);
     }
