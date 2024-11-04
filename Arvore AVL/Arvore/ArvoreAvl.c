@@ -30,7 +30,7 @@ struct arvore {
 
 /* --- Funções. --- */
 
-no *criaNo(int indice, char caractere) {
+no *criaNo(const int indice, const char caractere) {
     no *folha = (no*)malloc(sizeof(no));
     if(!folha) {
         return NULL;
@@ -54,7 +54,7 @@ arvore *criaArvore() {
         return NULL;
     }
     /* Criando o sentinela. */
-    arv->sentinela = criaNo(1000, 'S'); //Índice do sentinela é -1000 por padrão, e o caractere é a inicial do nome.
+    arv->sentinela = criaNo(1000, 'S'); //Índice do sentinela é −1000 por padrão, e o caractere é a inicial do nome.
     if(!arv->sentinela) {
         free(arv);
         return NULL;
@@ -64,15 +64,15 @@ arvore *criaArvore() {
     return arv;
 }
 
-no *getRaiz(arvore *arv) {
+no *getRaiz(const arvore *arv) {
     return arv->sentinela->filhoD;
 }
 
-int getNumElementos(arvore *arv) {
+int getNumElementos(const arvore *arv) {
     return arv->numElementos;
 }
 
-int insere(arvore *arv, int indice, char caractere) {
+int insere(arvore *arv, const int indice, const char caractere) {
     no *folha = criaNo(indice, caractere), *atual = arv->sentinela->filhoD, *aux = NULL; //Aux guardará o pai do atual, enquanto atual busca a posição nula para a inserção.
     if(!folha) {
         return 0;
@@ -107,7 +107,7 @@ int insere(arvore *arv, int indice, char caractere) {
     return 1;
 }
 
-int deleta(arvore *arv, int indice) {
+int deleta(arvore *arv, const int indice) {
     no *atual, *aux;
     /* Removendo. */
     if(arv->sentinela->filhoD) {
@@ -181,8 +181,8 @@ int deleta(arvore *arv, int indice) {
     return -1;
 }
 
-int busca(arvore *arv, int indice) {
-    no *atual = arv->sentinela->filhoD;
+int busca(const arvore *arv, const int indice) {
+    const no *atual = arv->sentinela->filhoD;
     /* Buscando elemento. */
     while(atual && atual->key->indice != indice) {
         if(indice < atual->key->indice) {
@@ -198,10 +198,10 @@ int busca(arvore *arv, int indice) {
     return 0;
 }
 
-void preOrdem(no *raiz) {
+void preOrdem(const no *raiz) {
     if(raiz) {
-        printf_s("\n(%d, %c) - FB: %d", raiz->key->indice, raiz->key->caractere, raiz->fb);
-        printf_s(" - Pai: (%d, %c)", raiz->pai->key->indice, raiz->pai->key->caractere);
+        printf("\n(%d, %c) - FB: %d", raiz->key->indice, raiz->key->caractere, raiz->fb);
+        printf(" - Pai: (%d, %c)", raiz->pai->key->indice, raiz->pai->key->caractere);
         preOrdem(raiz->filhoE);
         preOrdem(raiz->filhoD);
     }
@@ -215,7 +215,7 @@ void esvaziaArvore(arvore *arv) {
     arv->sentinela = NULL;
 }
 
-void atualizaFB_Insercao(arvore *arv, no *folha) {
+void atualizaFB_Insercao(const arvore *arv, no *folha) {
     no *atual = folha;
     /* Atualizando os FBs. */
     do {
@@ -232,12 +232,12 @@ void atualizaFB_Insercao(arvore *arv, no *folha) {
     }
 }
 
-void atualizaFB_Remocao(arvore *arv, no *pai, int indice) {
+void atualizaFB_Remocao(arvore *arv, no *pai, const int indice) {
     no *atual = pai;
     /* Atualizando os FBs. */
     if(atual != arv->sentinela) {
         //O elemento removido não foi a raiz.
-        if(indice <= atual->key->indice) { //<= pois estamos usando o predecessor, logo na remoção, o pai pode passar a ter o mesmo valor da chave removida na esquerda.
+        if(indice <= atual->key->indice) { //≤, pois estamos usando o predecessor, logo na remoção, o pai pode passar a ter o mesmo valor da chave removida na esquerda.
             atual->fb++;
         }else {
             atual->fb--;
@@ -260,7 +260,7 @@ void atualizaFB_Remocao(arvore *arv, no *pai, int indice) {
     }
 }
 
-void balanceia(arvore *arv, no *noDesbalanceado) {
+void balanceia(const arvore *arv, no *noDesbalanceado) {
     no *filho;
     /* Balanceando. */
     if(noDesbalanceado->fb == 2) {
