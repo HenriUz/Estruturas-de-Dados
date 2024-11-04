@@ -40,7 +40,7 @@ Após realizar uma rotação, o fator de balanceamento de cada nó envolvido dev
 | 2 | -1 | 1 | Dupla: direita - esquerda | -1 | 0 | 0 |
 
 > [!important]
-> A remoção na Árvore AVL pode necessitar de mais de uma rotação, então sua complexidade é O($k * log(n)$)
+> A remoção na Árvore AVL pode necessitar de mais de uma rotação, então sua complexidade é O( $k * log(n)$ )
 
 ## Objetivo
 Este repositório tem o objetivo de mostrar o funcionamento de uma Árvore AVL por meio da implementação de uma interface por terminal.
