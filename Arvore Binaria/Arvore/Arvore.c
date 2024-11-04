@@ -35,15 +35,15 @@ arvore *criaArvore() {
     return arv;
 }
 
-no *getRaiz(arvore *arv) {
+no *getRaiz(const arvore *arv) {
     return arv->raiz;
 }
 
-int getNumElementos(arvore *arv) {
+int getNumElementos(const arvore *arv) {
     return arv->numElementos;
 }
 
-no *criaNo(int chave) {
+no *criaNo(const int chave) {
     no *folha = (no*)malloc(sizeof(no));
     if(!folha) {
         return NULL;
@@ -54,7 +54,7 @@ no *criaNo(int chave) {
     return folha;
 }
 
-int insere(arvore *arv, int chave) {
+int insere(arvore *arv, const int chave) {
     no *folha = criaNo(chave), *pai, *atual; //Atual será o ponteiro que irá encontrar a folha onde iremos inserir, e pai será o ponteiro que guardará o pai do atual.
     if(!folha) {
         return 0;
@@ -74,7 +74,7 @@ int insere(arvore *arv, int chave) {
                 atual = atual->filhoD;
             }
         }
-        /* Vinvulando folha com o pai. */
+        /* Vinculando folha com o pai. */
         if(chave < pai->chave) {
             pai->filhoE = folha;
         }else {
@@ -87,7 +87,7 @@ int insere(arvore *arv, int chave) {
     return 1;
 }
 
-int deleta(arvore *arv, int chave) {
+int deleta(arvore *arv, const int chave) {
     no *atual = arv->raiz, *aux;
     if(!arv->numElementos) {
         //Árvore vazia.
@@ -123,7 +123,7 @@ int deleta(arvore *arv, int chave) {
             while(atual->filhoD) {
                 atual = atual->filhoD;
             }
-            /* Realizando cópia. */.
+            /* Realizando cópia. */
             aux->chave = atual->chave;
             /* Removendo o nó predecessor. */
             if(atual->pai->filhoE == atual) {
@@ -175,7 +175,7 @@ void esvaziaArvore(arvore *arv) {
     }
 }
 
-int busca(arvore *arv, int chave) {
+int busca(const arvore *arv, const int chave) {
     no *raiz = arv->raiz;
     int encontrou = 0;
     /* Buscando o elemento. */
@@ -193,7 +193,7 @@ int busca(arvore *arv, int chave) {
     return encontrou;
 }
 
-void preOrdem(no *raiz) {
+void preOrdem(const no *raiz) {
     if(raiz) {
         printf("\n%d", raiz->chave);
         if(raiz->pai) {
@@ -204,7 +204,7 @@ void preOrdem(no *raiz) {
     }
 }
 
-void emOrdem(no *raiz) {
+void emOrdem(const no *raiz) {
     if(raiz) {
         emOrdem(raiz->filhoE);
         printf("%d ", raiz->chave);
@@ -212,7 +212,7 @@ void emOrdem(no *raiz) {
     }
 }
 
-void posOrdem(no *raiz) {
+void posOrdem(const no *raiz) {
     if(raiz) {
         posOrdem(raiz->filhoE);
         posOrdem(raiz->filhoD);
