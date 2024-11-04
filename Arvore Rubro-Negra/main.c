@@ -57,6 +57,7 @@ int main(void) {
                 }else {
                     printf("\nElemento não encontrado.\n");
                 }
+                break;
             case 4:
                 /* Imprimindo a árvore em pré-ordem. */
                 printf("\nNúmero de elementos na árvore: %d\n", getNumElementos(arv));
