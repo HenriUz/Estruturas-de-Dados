@@ -28,7 +28,7 @@ Por fim, a impressão pode ser feita de 3 maneiras:
 
 - Em ordem: imprime subárvore esquerda, depois a raiz, e por fim a subárvore direita.
 - Pré-ordem: imprime a raiz, depois a subárvore esquerda, e por fim a subárvore direita.
-- Pós-ordem: imprime a subárvore direita, depois a raiz, e por fim a subárvore esquerda.
+- Pós-ordem: imprime a subárvore esquerda, depois a subárvore direita, e por fim a raiz.
 
 ## Objetivo
 Este repositório tem o objetivo de mostrar o funcionamento de uma árvore binária comum por meio da implementação de uma interface por terminal.
