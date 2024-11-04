@@ -1,8 +1,16 @@
+/*
+ArvoreAvl.c
+
+Descrição: implementação das funções da árvore.
+*/
+
+/* --- Includes. --- */
+
 #include "ArvoreAvl.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-/*** -- Estruturas. -- ***/
+/* --- Estruturas. --- */
 
 struct chave {
     int indice;
@@ -20,21 +28,19 @@ struct arvore {
     int numElementos;
 };
 
-/*** -- Funções. -- ***/
+/* --- Funções. --- */
 
 no *criaNo(int indice, char caractere) {
-    /*** -- Criando nó. -- ***/
     no *folha = (no*)malloc(sizeof(no));
     if(!folha) {
         return NULL;
     }
-    /*** -- Criando a chave. -- ***/
     folha->key = (chave*)malloc(sizeof(chave));
     if(!folha->key) {
         free(folha);
         return NULL;
     }
-    /*** -- Setando os valores. -- ***/
+    /* Setando os valores. */
     folha->key->indice = indice;
     folha->key->caractere = caractere;
     folha->fb = 0;
@@ -43,18 +49,17 @@ no *criaNo(int indice, char caractere) {
 }
 
 arvore *criaArvore() {
-    /*** -- Criando a árvore. -- ***/
     arvore *arv = (arvore*)malloc(sizeof(arvore));
     if(!arv) {
         return NULL;
     }
-    /*** -- Criando o sentinela. -- ***/
+    /* Criando o sentinela. */
     arv->sentinela = criaNo(1000, 'S'); //Índice do sentinela é -1000 por padrão, e o caractere é a inicial do nome.
     if(!arv->sentinela) {
         free(arv);
         return NULL;
     }
-    /*** -- Setando os valores. -- ***/
+    /* Setando o valor. */
     arv->numElementos = 0; //Número de elemento na árvore.
     return arv;
 }
@@ -68,18 +73,17 @@ int getNumElementos(arvore *arv) {
 }
 
 int insere(arvore *arv, int indice, char caractere) {
-    /*** -- Criando nó e pegando a raiz. -- ***/
-    no *folha = criaNo(indice, caractere), *atual = arv->sentinela->filhoD, *aux = NULL;;
+    no *folha = criaNo(indice, caractere), *atual = arv->sentinela->filhoD, *aux = NULL; //Aux guardará o pai do atual, enquanto atual busca a posição nula para a inserção.
     if(!folha) {
         return 0;
     }
-    /*** -- Inserindo. -- ***/
+    /* Inserindo. */
     if(!atual) {
-        //Árvore vazia. Insere a nova raiz.
+        /* Inserindo a raiz. */
         arv->sentinela->filhoD = folha;
         folha->pai = arv->sentinela;
     }else {
-        //Buscando a posição onde nossa folha será inserida. Aux guardará o pai, enquanto atual busca a posição nula para a inserção.
+        /* Buscando posição para inserir. */
         while(atual) {
             aux = atual;
             if(folha->key->indice < atual->key->indice) {
@@ -88,7 +92,7 @@ int insere(arvore *arv, int indice, char caractere) {
                 atual = atual->filhoD;
             }
         }
-        //Vinculando a folha com o pai.
+        /* Vinculando a folha com o pai. */
         if(folha->key->indice < aux->key->indice) {
             aux->filhoE = folha;
         }else {
@@ -96,16 +100,18 @@ int insere(arvore *arv, int indice, char caractere) {
         }
         folha->pai = aux;
     }
+    /* Verificando balanceamento. */
     atualizaFB_Insercao(arv, folha); //Atualizando os fb de todos os nós da subárvore onde a folha foi inserida.
+    /* Atualizando a árvore. */
     arv->numElementos++;
     return 1;
 }
 
 int deleta(arvore *arv, int indice) {
     no *atual, *aux;
-    /*** -- Removendo. -- ***/
+    /* Removendo. */
     if(arv->sentinela->filhoD) {
-        //Árvore não está vazia. Buscando elemento.
+        /* Buscando o elemento. */
         atual = arv->sentinela->filhoD;
         while(atual && atual->key->indice != indice) {
             if(indice < atual->key->indice) {
@@ -115,19 +121,19 @@ int deleta(arvore *arv, int indice) {
             }
         }
         if(atual) {
-            //Elemento encontrado. Removendo ele.
+            //Elemento encontrado.
             if(atual->filhoE && atual->filhoD) {
-                //Elemento possui os dois filhos. Remove por cópia de predecessor.
+                //Elemento possui os dois filhos. Remove por cópia de predecessor, atual busca o predecessor e o aux guarda o elemento atual.
                 aux = atual;
-                //Buscando predecessor.
+                /* Buscando predecessor. */
                 atual = atual->filhoE;
                 while(atual->filhoD) {
                     atual = atual->filhoD;
                 }
-                //Realizando a cópia.
+                /* Realizando a cópia. */
                 aux->key->indice = atual->key->indice;
                 aux->key->caractere = atual->key->caractere;
-                //Removendo predecessor.
+                /* Removendo predecessor. */
                 if(atual == atual->pai->filhoE) {
                     atual->pai->filhoE = atual->filhoE;
                 }else {
@@ -137,7 +143,7 @@ int deleta(arvore *arv, int indice) {
                     atual->filhoE->pai = atual->pai;
                 }
             }else if(!atual->filhoE && !atual->filhoD) {
-                //Elemento não possui nenhum filho. Apenas desvincula do pai.
+                //Elemento não possui nenhum filho.
                 if(atual == atual->pai->filhoE) {
                     atual->pai->filhoE = NULL;
                 }else {
@@ -160,8 +166,11 @@ int deleta(arvore *arv, int indice) {
                 }
                 atual->filhoD->pai = atual->pai;
             }
+            /* Verificando balanceamento. */
             atualizaFB_Remocao(arv, atual->pai, atual->key->indice); //Atualizando FBs.
+            /* Atualizando a árvore. */
             arv->numElementos--; //Atualizando quantidade.
+            /* Liberando memória. */
             free(atual->key);
             free(atual);
             atual = NULL;
@@ -174,7 +183,7 @@ int deleta(arvore *arv, int indice) {
 
 int busca(arvore *arv, int indice) {
     no *atual = arv->sentinela->filhoD;
-    /*** -- Buscando elemento. -- ***/
+    /* Buscando elemento. */
     while(atual && atual->key->indice != indice) {
         if(indice < atual->key->indice) {
             atual = atual->filhoE;
@@ -182,7 +191,7 @@ int busca(arvore *arv, int indice) {
             atual = atual->filhoD;
         }
     }
-    /*** -- Verificando se o elemento foi encontrado. -- ***/
+    /* Verificando se o elemento foi encontrado. */
     if(atual) {
         return 1;
     }
@@ -206,11 +215,9 @@ void esvaziaArvore(arvore *arv) {
     arv->sentinela = NULL;
 }
 
-/*** -- Funções de balanceamento da avl. -- ***/
-
 void atualizaFB_Insercao(arvore *arv, no *folha) {
-    /*** -- Atualizando os FBs. -- ***/
     no *atual = folha;
+    /* Atualizando os FBs. */
     do {
         if(atual == atual->pai->filhoE && atual->pai != arv->sentinela) {
             atual->pai->fb--;
@@ -219,15 +226,15 @@ void atualizaFB_Insercao(arvore *arv, no *folha) {
         }
         atual = atual->pai;
     }while(atual->fb != 0 && atual->fb != 2 && atual->fb != -2 && atual != arv->sentinela);
-    /*** -- Verificando se houve um desbalanceamento. -- ***/
+    /* Verificando se houve um desbalanceamento. */
     if(atual->fb == 2 || atual->fb == -2) {
         balanceia(arv, atual);
     }
 }
 
 void atualizaFB_Remocao(arvore *arv, no *pai, int indice) {
-    /*** -- Atualizando os FBs. -- ***/
     no *atual = pai;
+    /* Atualizando os FBs. */
     if(atual != arv->sentinela) {
         //O elemento removido não foi a raiz.
         if(indice <= atual->key->indice) { //<= pois estamos usando o predecessor, logo na remoção, o pai pode passar a ter o mesmo valor da chave removida na esquerda.
@@ -243,7 +250,7 @@ void atualizaFB_Remocao(arvore *arv, no *pai, int indice) {
                 atual->fb--;
             }
         }
-        /*** -- Verificando se houve um desbalanceamento. -- ***/
+        /* Verificando se houve um desbalanceamento. */
         if(atual->fb == 2 || atual->fb == -2) {
             balanceia(arv, atual);
             if(atual->pai != arv->sentinela && atual->pai->fb == 0) {
@@ -255,28 +262,28 @@ void atualizaFB_Remocao(arvore *arv, no *pai, int indice) {
 
 void balanceia(arvore *arv, no *noDesbalanceado) {
     no *filho;
-    /*** -- Balanceando. -- ***/
+    /* Balanceando. */
     if(noDesbalanceado->fb == 2) {
         //Subárvore direita tem mais elementos.
         filho = noDesbalanceado->filhoD;
         if(filho->fb >= 0) {
             //Rotação simples.
-            /*** -- Corrigindo FBs. -- ***/
+            /* Corrigindo FBs. */
             if(filho->fb == 1) {
                 noDesbalanceado->fb = filho->fb = 0;
             }else {
                 noDesbalanceado->fb = 1;
                 filho->fb = -1;
             }
-            /*** -- Rotacionando. -- ***/
+            /* Rotacionando. **/
             rotacaoEsq(noDesbalanceado);
-            /*** -- Verificando raiz. -- ***/
+            /* Verificando raiz. */
             if(arv->sentinela->filhoD == noDesbalanceado) {
                 arv->sentinela->filhoD = filho;
             }
         }else {
             //Rotação dupla.
-            /*** -- Corrigindo FBs. -- ***/
+            /* Corrigindo FBs. */
             if(filho->filhoE->fb == 0){
                 noDesbalanceado->fb = filho->fb = 0;
             }else if(filho->filhoE->fb == 1){
@@ -287,10 +294,10 @@ void balanceia(arvore *arv, no *noDesbalanceado) {
                 filho->fb = 1;
             }
             filho->filhoE->fb = 0;
-            /*** -- Rotacionando. -- ***/
+            /* Rotacionando. */
             rotacaoDir(filho);
             rotacaoEsq(noDesbalanceado);
-            /*** -- Verificando raiz. -- ***/
+            /* Verificando raiz. */
             if(arv->sentinela->filhoD == noDesbalanceado){
                 arv->sentinela->filhoD = noDesbalanceado->pai;
             }
@@ -300,22 +307,22 @@ void balanceia(arvore *arv, no *noDesbalanceado) {
         filho = noDesbalanceado->filhoE;
         if(filho->fb <= 0) {
             //Rotação simples.
-            /*** -- Corrigindo FBs. -- ***/
+            /* Corrigindo FBs. */
             if(filho->fb == -1) {
                 noDesbalanceado->fb = filho->fb = 0;
             }else {
                 noDesbalanceado->fb = -1;
                 filho->fb = 1;
             }
-            /*** -- Rotacionando. -- ***/
+            /* Rotacionando. */
             rotacaoDir(noDesbalanceado);
-            /*** -- Verificando raiz. -- ***/
+            /* Verificando raiz. */
             if(arv->sentinela->filhoD == noDesbalanceado) {
                 arv->sentinela->filhoD = filho;
             }
         }else {
             //Rotação dupla.
-            /*** -- Corrigindo FBs. -- ***/
+            /* Corrigindo FBs. */
             if(filho->filhoD->fb == 0){
                 noDesbalanceado->fb = filho->fb = 0;
             }else if(filho->filhoD->fb == 1){
@@ -326,10 +333,10 @@ void balanceia(arvore *arv, no *noDesbalanceado) {
                 filho->fb = 0;
             }
             filho->filhoD->fb = 0;
-            /*** -- Rotacionando. -- ***/
+            /* Rotacionando. */
             rotacaoEsq(filho);
             rotacaoDir(noDesbalanceado);
-            /*** -- Verificando raiz. -- ***/
+            /* Verificando raiz. */
             if(arv->sentinela->filhoD == noDesbalanceado){
                 arv->sentinela->filhoD = noDesbalanceado->pai;
             }
@@ -338,39 +345,39 @@ void balanceia(arvore *arv, no *noDesbalanceado) {
 }
 
 void rotacaoEsq(no *noDesbalanceado) {
-    /*** -- Vinculando o pai com o novo filho (filhoD). -- ***/
+    /* Vinculando o pai com o novo filho (filhoD). */
     if(noDesbalanceado == noDesbalanceado->pai->filhoE) {
         noDesbalanceado->pai->filhoE = noDesbalanceado->filhoD;
     }else {
         noDesbalanceado->pai->filhoD = noDesbalanceado->filhoD;
     }
     noDesbalanceado->filhoD->pai = noDesbalanceado->pai;
-    /*** -- Atualizando o novo pai do nó. -- ***/
+    /* Atualizando o novo pai do nó. */
     noDesbalanceado->pai = noDesbalanceado->filhoD;
-    /*** -- Vinculando o novo filho direito do nó. -- ***/
+    /* Vinculando o novo filho direito do nó. */
     noDesbalanceado->filhoD = noDesbalanceado->pai->filhoE;
     if(noDesbalanceado->filhoD) {
         noDesbalanceado->filhoD->pai = noDesbalanceado;
     }
-    /*** -- Vinculando o nó como o novo filho esquerdo do pai. -- ***/
+    /* Vinculando o nó como o novo filho esquerdo do pai. */
     noDesbalanceado->pai->filhoE = noDesbalanceado;
 }
 
 void rotacaoDir(no *noDesbalanceado) {
-    /*** -- Vinculando o pai com o novo filho (filhoE). -- ***/
+    /* Vinculando o pai com o novo filho (filhoE). */
     if(noDesbalanceado == noDesbalanceado->pai->filhoE) {
         noDesbalanceado->pai->filhoE = noDesbalanceado->filhoE;
     }else {
         noDesbalanceado->pai->filhoD = noDesbalanceado->filhoE;
     }
     noDesbalanceado->filhoE->pai = noDesbalanceado->pai;
-    /*** -- Atualizando o novo pai do nó. -- ***/
+    /* Atualizando o novo pai do nó. */
     noDesbalanceado->pai = noDesbalanceado->filhoE;
-    /*** -- Vinculando o novo filho esquerdo do nó. -- ***/
+    /* Vinculando o novo filho esquerdo do nó. */
     noDesbalanceado->filhoE = noDesbalanceado->pai->filhoD;
     if(noDesbalanceado->filhoE) {
         noDesbalanceado->filhoE->pai = noDesbalanceado;
     }
-    /*** -- Vinculando o nó como o novo filho direito do pai. -- ***/
+    /* Vinculando o nó como o novo filho direito do pai. */
     noDesbalanceado->pai->filhoD = noDesbalanceado;
 }
