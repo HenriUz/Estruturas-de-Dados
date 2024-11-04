@@ -19,7 +19,7 @@ struct linha {
 
 /* --- Funções --- */
 
-void geraLinha(linha *line, int seed) {
+void geraLinha(linha *line, const int seed) {
     /* Setando a seed. */
     srand(seed);
     /* Aleatorizando a data de nascimento. */
@@ -34,7 +34,7 @@ void geraLinha(linha *line, int seed) {
     line->cpf = (rand() % 1000000000000) + 10000000000;
 }
 
-int criaDataset(FILE *arq, int tam) {
+int criaDataset(FILE *arq, const int tam) {
     linha line;
     /* Colocando o byte nulo na última posição. */
     line.nome[5] = '\0';
