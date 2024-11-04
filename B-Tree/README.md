@@ -1,5 +1,7 @@
 # B-Tree
-São uma generalização das árvores binárias de busca, pois cada nó de uma árvore binária armazena uma única chave de busca, enquanto as B-Tree armazenam um número maior de chaves em cada nó, ou no termo mais usual para essa árvore, em cada página. As B-Tree são árvores de pesquisa balanceadas projetadas para funcionar bem em discos magnéticos ou outros dispositivos de armazenamento secundário de acesso direto, sendo otimizadas para minizar operações de E/S do disco. A ideia é fazer com que cada nó da árvore contenha tanta informação quanto a que cabe num bloco de disco. 
+São uma generalização das árvores binárias de busca, pois cada nó de uma árvore binária armazena uma única chave de busca, enquanto as B-Tree armazenam um número maior de chaves em cada nó, ou no termo mais usual para essa árvore, em cada página. 
+
+As B-Tree são árvores de pesquisa balanceadas projetadas para funcionar bem em discos magnéticos ou outros dispositivos de armazenamento secundário de acesso direto, sendo otimizadas para minizar operações de E/S do disco. A ideia é fazer com que cada página da árvore contenha tanta informação quanto a que cabe num bloco de disco. 
 
 A consequência disso tudo é que, em geral, a B-Tree possui grande largura e pouca profundidade, diminuindo o número de E/S do disco.
 
