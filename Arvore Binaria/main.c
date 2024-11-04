@@ -1,6 +1,16 @@
+/*
+main.c
+
+Descrição: programa responsável por lidar com os inputs do usário e por gerenciar as funções da árvore.
+*/
+
+/* --- Includes. --- */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "Arvore/Arvore.h"
+
+/* --- Funções. --- */
 
 int main(void) {
     int resp, resultadoRem;
@@ -9,15 +19,13 @@ int main(void) {
         printf("\nErro ao criar a árvore.");
         return 1;
     }
-
-    /*** -- MENU. -- ***/
-
+    /* Iniciando interface. */
     printf("\nMENU:\n1 - Inserir.\n2 - Remover.\n3 - Buscar.\n4 - Imprimir.\n5 - Sair.\nSua resposta: ");
     scanf("%d", &resp);
     while(resp != 5) {
         switch (resp) {
             case 1:
-                //Inserção.
+                /* Inserindo um elemento. */
                 printf("\nQual elemento você deseja inserir: ");
                 scanf("%d", &resp);
                 if(!insere(arv, resp)) {
@@ -25,7 +33,7 @@ int main(void) {
                 }
                 break;
             case 2:
-                //Remoção.
+                /* Removendo um elemento. */
                 printf("\nQual elemento você deseja remover: ");
                 scanf("%d", &resp);
                 resultadoRem = deleta(arv, resp);
@@ -38,7 +46,7 @@ int main(void) {
                 }
                 break;
             case 3:
-                //Busca.
+                /* Buscando um elemento. */
                 printf("\nQual elemento você deseja buscar: ");
                 scanf("%d", &resp);
                 if(busca(arv, resp)) {
@@ -48,7 +56,7 @@ int main(void) {
                 }
                 break;
             case 4:
-                //Impreção.
+                /* Imprimindo a árvore. */
                 printf("\n1 - Pré Ordem.\n2 - Em Ordem.\n3 - Pós Ordem.\nSua resposta: ");
                 scanf("%d", &resp);
                 printf("\nNúmero de elementos: %d", getNumElementos(arv));
@@ -68,7 +76,7 @@ int main(void) {
         printf("\nMENU:\n1 - Inserir.\n2 - Remover.\n3 - Buscar.\n4 - Imprimir.\n5 - Sair.\nSua resposta: ");
         scanf("%d", &resp);
     }
-    /*** -- Esvaziando a árvore. -- ***/
+    /* Esvaziando a árvore. */
     esvaziaArvore(arv);
     free(arv);
     arv = NULL;
