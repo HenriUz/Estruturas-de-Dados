@@ -1,89 +1,91 @@
-#ifndef ARVORE_H
-#define ARVORE_H
+/*
+Arvore.h
 
-/*** -- Estruturas. -- ***/
+Descrição: definição das funções da árvore.
+*/
+
+/* --- Estruturas. --- */
 
 typedef struct arvore arvore;
 
 typedef struct no no;
 
-/*** -- Funções. -- ***/
+/* --- Funções. --- */
 
 /*
-Descrição: Função que cria e inicializa uma estrutura de árvore.
-Entrada: Nada.
-Saída: Ponteiro para a árvore.
+Descrição: função responsável criar e inicializar uma árvore.
+Entrada: nada.
+Saída: ponteiro para a árvore.
 */
 arvore *criaArvore();
 
 /*
-Descrição: Função que retorna a raiz da árvore informada.
-Entrada: Ponteiro para a árvore.
-Saída: Ponteiro para a raiz.
+Descrição: função responsável por retornar a raiz da árvore informada.
+Entrada: ponteiro para a árvore.
+Saída: ponteiro para a raiz.
 */
 no *getRaiz(arvore *arv);
 
 /*
-Descrição: Função que retorna a quantidade de elementos na árvore.
-Entrada: Ponteiro para a árvore.
-Saída: Inteiro da quantidade de elementos na árvore.
+Descrição: função responsável por retornar a quantidade de elementos na árvore.
+Entrada: ponteiro para a árvore.
+Saída: inteiro da quantidade de elementos na árvore.
 */
 int getNumElementos(arvore *arv);
 
 /*
-Descrição: Função que cria e inicializa uma estrutura de nó.
-Entrada: Inteiro da chave.
-Saída: Ponteiro para o nó.
+Descrição: função responsável por criar e inicializar um nó.
+Entrada: inteiro da chave.
+Saída: ponteiro para o nó.
 */
 no *criaNo(int chave);
 
 /*
-Descrição: Função que insere uma chave na árvore.
-Entrada: Ponteiro para a árvore, inteiro da chave.
+Descrição: função responsável por inserir um nó na árvore.
+Entrada: ponteiro para a árvore, inteiro da chave.
 Saída: 1 - sucesso, 0 - erro.
 */
 int insere(arvore *arv, int chave);
 
 /*
-Descrição: Função que remove um elemento da árvore.
-Entrada: Ponteiro para a árvore, inteiro da chave.
+Descrição: função responsável por remover um elemento da árvore.
+Entrada: ponteiro para a árvore, inteiro da chave.
 Saída: 1 - sucesso, 0 - árvore vazia, -1 - elemento não encontrado.
 */
 int deleta(arvore *arv, int chave);
 
 /*
-Descrição: Função que esvazia a árvore (libera a memória alocada para cada nó).
-Entrada: Ponteiro para a árvore.
-Saída: Nada.
+Descrição: função responsável por esvaziar a árvore (libera a memória alocada para cada nó).
+Entrada: ponteiro para a árvore.
+Saída: nada.
 */
 void esvaziaArvore(arvore *arv);
 
 /*
-Descrição: Função que busca um elemento na árvore.
-Entrada: Ponteiro para a árvore, inteiro da chave.
-Saída: 1 - encontrou, 0 - não encontrou. (Aqui não há utilidade no nó, mas se a estrutura for alterada, é só fazer retornar o nó).
+Descrição: função responsável por buscar um elemento na árvore.
+Entrada: ponteiro para a árvore, inteiro da chave.
+Saída: 1 - encontrou, 0 - não encontrou.
+Observação: o correto seria retornar o nó ou a chave, mas para fins didáticos, a função apenas informa se encontrou ou não.
 */
 int busca(arvore *arv, int chave);
 
 /*
-Descrição: Função que imprime a árvore em pré ordem (raiz, filho esquerdo, filho direito). Se o nó tiver pai, ele será impresso na frente.
-Entrada: Ponteiro para o nó (inicialmente a raiz).
-Saída: Nada.
+Descrição: função responsável por imprimir a árvore em pré ordem (raiz, filho esquerdo, filho direito). Se o nó tiver pai, ele será impresso na frente.
+Entrada: ponteiro para o nó (inicialmente a raiz).
+Saída: nada.
 */
 void preOrdem(no* raiz);
 
 /*
-Descrição: Função que imprime a árvore em ordem (filho esquerdo, raiz, filho direito).
-Entrada: Ponteiro para o nó (inicialmente a raiz).
-Saída: Nada.
+Descrição: função responsável por imprimir a árvore em ordem (filho esquerdo, raiz, filho direito).
+Entrada: ponteiro para o nó (inicialmente a raiz).
+Saída: nada.
 */
 void emOrdem(no *raiz);
 
 /*
-Descrição: Função que imprime a árvore em pós ordem (filho esquerdo, filho direito, raiz). Se o nó tiver pai, ele será impresso na frente.
-Entrada: Ponteiro para o nó (inicialmente a raiz).
-Saída: Nada.
+Descrição: função responsável por imprimir a árvore em pós ordem (filho esquerdo, filho direito, raiz). Se o nó tiver pai, ele será impresso na frente.
+Entrada: ponteiro para o nó (inicialmente a raiz).
+Saída: nada.
 */
 void posOrdem(no *raiz);
-
-#endif
