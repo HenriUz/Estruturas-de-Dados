@@ -1,26 +1,29 @@
-#ifndef ES_H
-#define ES_H
+/*
+ES.h
+
+Descrição: definição das funções responsáveis por criar um dataset.
+*/
+
+/* --- Includes. --- */
 
 #include <stdio.h>
 
-/*** -- Estruturas -- ***/
+/* --- Estruturas --- */
 
 typedef struct linha linha;
 
-/*** -- Funções -- ***/
+/* --- Funções --- */
 
 /*
-Descrição: Função que irá preencher os dados da estrutura linha com valores aleatórios.
-Entrada: Ponteiro para a estrutura, inteiro para a semente do srand.
-Saída: Nada.
+Descrição: função responsável por preencher os dados da estrutura linha com valores aleatórios.
+Entrada: ponteiro para a estrutura, inteiro para a semente do srand.
+Saída: nada.
 */
-void geraLinha(linha *linha, int seed);
+void geraLinha(linha *line, int seed);
 
 /*
-Descrição: Função que irá escrever no arquivo a quantidade de informações.
-Entrada: Ponteiro para um array de char, inteiro do número de linhas.
-Saída: 1 - Sucesso, 0 - Erro.
+Descrição: função responsável por escrever no arquivo a quantidade de informações.
+Entrada: ponteiro para um arquivo, inteiro do número de linhas.
+Saída: 1 - sucesso, 0 - erro.
 */
 int criaDataset(FILE *arq, int tam);
-
-#endif //ES_H
