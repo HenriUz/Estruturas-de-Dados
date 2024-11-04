@@ -4,7 +4,7 @@ São uma generalização das árvores binárias de busca, pois cada nó de uma �
 A consequência disso tudo é que, em geral, a B-Tree possui grande largura e pouca profundidade, diminuindo o número de E/S do disco.
 
 > [!note]
-> A altura máxima de uma B-Tree em seu pior caso é $h \leq \log_t(\frac{n + 1}{2}$, em que t é o grau mínimo e n é o número de nós.
+> A altura máxima de uma B-Tree em seu pior caso é $h \leq \log_t(\frac{n + 1}{2})$, em que t é o grau mínimo e n é o número de nós.
 
 ## Propriedades
 
