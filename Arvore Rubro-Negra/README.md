@@ -1,13 +1,13 @@
 # Árvore Rubro-Negra
-As árvores rubros-negras são uma das variações da estrutura de dados árvore que garante o balanceamento de seus elementos. Ela foi inventada 10 anos após a criação da árvore avl, 1972, por Rudolf Bayer, sob o nome de B-árvores binárias simétricas. Foi em 1978 que ela ganhou seu nome atual por Leo J. Guibas e Robert Sedgewick. 
+A Árvore Rubro-Negra é uma das variações da estrutura de dados árvore que garante o balanceamento de seus elementos. Ela foi inventada 10 anos após a criação da Árvore AVL, 1972, por Rudolf Bayer, sob o nome de B-árvores binárias simétricas. Foi em 1978 que ela ganhou seu nome atual por Leo J. Guibas e Robert Sedgewick. 
 
-O fator de balanceamento dessa árvore é a cor dos nós, atributo extra de cada nó, que pode ser vermelho ou preto (por isso o nome). O interessante dessa árvore é que sua altura máxima é `2 * log₂(n+1)`.
+O fator de balanceamento dessa árvore é a cor dos nós, atributo extra de cada nó, que pode ser vermelho ou preto (por isso o nome). O interessante dessa árvore é que sua altura máxima é $2 * \log_2(n+1)$.
 
 > [!NOTE]
 > Esse tipo de árvore é aproximadamente balanceada, pois ela permite leves desbalanceamentos.
 
 ## Propriedades
-As árvores rubros-negras devem satisfazer as seguintes condições: 
+Além das propriedades de uma árvore binária, as árvores rubros-negras devem satisfazer as seguintes condições: 
 1. Todo nó é vermelho ou preto.
 2. A raiz da árvore é preta.
 3. Se um nó é vermelho, seus filhos são pretos.
@@ -15,7 +15,10 @@ As árvores rubros-negras devem satisfazer as seguintes condições:
 
 O número de nós pretos de um caminho desde um nó x, sem incluir ele, até uma folha é chamado de altura de preto.
 
-## Desbalanceamento na inserção
+## Funcionamento
+Assim como a Árvore AVL, está árvore contém as operações básicas de uma árvore binária, mais as operações necessárias para verificar e corrigir desbalanceamentos.
+
+### Desbalanceamento na inserção
 Por padrão, todo novo nó na árvore é vermelho, e por isso 2 propriedades podem ser quebradas. A primeira é a raiz ser preta, pois o novo nó pode se tornar a nova raiz, e a segunda é os filhos de um nó vermelho ser preto, pois o novo nó pode ser filho desse de um nó vermelho.
 
 Então, analisando essas quebras da propriedade, podemos assumir 3 casos para corrigir essa situação:
@@ -28,14 +31,9 @@ No final da correção, a raiz é colorida de preto para garantir a propriedade.
 > [!IMPORTANT]
 > Esses casos, bem como as soluções, se espelham dependendo do lado da árvore.
 
-### Caso 1
-Neste caso devemos fazer o pai e o tio ficarem pretos, o avô ficar vermelho, e por fim analisar o avô recursivamente.
-
-### Caso 2
-Neste caso devemos fazer uma rotação para à esquerda no pai, que irá se tornar o elemento avaliado, e iremos ao caso 3.
-
-### Caso 3
-Neste último caso devemos fazer o pai ficar preto, o avô vermelho, e uma rotação à direita no avô.
+- Caso 1: neste caso devemos fazer o pai e o tio ficarem pretos, o avô ficar vermelho, e por fim analisar o avô recursivamente.
+- Caso 2: neste caso devemos fazer uma rotação para à esquerda no pai, que irá se tornar o elemento avaliado, e iremos ao caso 3.
+- Caso 3: neste último caso devemos fazer o pai ficar preto, o avô vermelho, e uma rotação à direita no avô.
 
 ### Resumindo
 Para elementos avaliados a esquerda do avô:
@@ -55,7 +53,7 @@ Para elementos avaliados a direita do avô:
 | 1,2,3 | - | - | Raiz preto |
 
 ## Desbalanceamento na remoção
-Como sempre, a remoção é sempre um pouco mais complexo do que a inserção. Na remoção devemos pensar na cor do elemento que estamos removendo, pois na remoção de um nó vermelho nenhuma propriedade é quebrada, mas por outro lado, a remoção de um nó preto pode quebrar 3 propriedades, a primeira é a da raiz ser preta, a segunda é um nó vermelho ter somente filhos pretos, e a terceira é a quantidade de nós pretos ser a mesma nos diferentes caminhos até a raiz.
+Como sempre, a remoção é sempre um pouco mais complexa do que a inserção. Na remoção devemos pensar na cor do elemento que estamos removendo, pois na remoção de um nó vermelho nenhuma propriedade é quebrada, mas por outro lado, a remoção de um nó preto pode quebrar 3 propriedades, a primeira é a da raiz ser preta, a segunda é um nó vermelho ter somente filhos pretos, e a terceira é a quantidade de nós pretos ser a mesma nos diferentes caminhos até a raiz.
 
 Com isso, temos quatro casos para se analisar (8 se considerarmos que é espelhado):
 1. Irmão é vermelho.
@@ -63,17 +61,10 @@ Com isso, temos quatro casos para se analisar (8 se considerarmos que é espelha
 3. Irmão é preto, e seu filho esquerdo é vermelho e o direito é preto.
 4. Irmão é preto, e seu filho direito é vermelho.
 
-### Caso 1
-Neste caso, o irmão se torna preto, o pai se torna vermelho, rotação à esquerda no pai, levando aos outros casos.
-
-### Caso 2
-Neste caso, o irmão se torna vermelho, e analisa o pai recursivamente.
-
-### Caso 3
-Neste caso, o irmão se torna vermelho, e rotação à direita no irmão, levando ao caso 4.
-
-### Caso 4
-Neste caso, o irmão fica na cor do pai, o pai do elemento se torna pret, o filho direito do irmão também se torna preto, e por fim rotação à esquerda no pai do elemento.
+- Caso 1: neste caso, o irmão se torna preto, o pai se torna vermelho, rotação à esquerda no pai, levando aos outros casos.
+- Caso 2: neste caso, o irmão se torna vermelho, e analisa o pai recursivamente.
+- Caso 3: neste caso, o irmão se torna vermelho, e rotação à direita no irmão, levando ao caso 4.
+- Caso 4: neste caso, o irmão fica na cor do pai, o pai do elemento se torna pret, o filho direito do irmão também se torna preto, e por fim rotação à esquerda no pai do elemento.
 
 ### Resumindo
 Para elementos avaliados a esquerda do pai:
@@ -96,4 +87,5 @@ Para elementos avaliados a direita do pai:
 | 3 | Preto | Preto | Preto e filho da direita vermelho e esquerda preto | Filho direito do irmão preto / Irmão vermelho / Rotação à esquerda no irmão / Caso 4 |
 | 3 | Preto | Preto | Preto e filho esquerdo vermelho | Irmão cor do pai / Pai preto / Filho esquerdo do irmão preto / Rotação à direita no pai |
 
-
+## Objetivo
+Este repositório tem o objetivo de mostrar o funcionamento de uma Árvore Rubro-Negra por meio da implementação de uma interface por terminal.
