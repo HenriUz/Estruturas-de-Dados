@@ -16,7 +16,7 @@ Além das propriedades de uma árvore binária, as árvores rubros-negras devem 
 O número de nós pretos de um caminho desde um nó x, sem incluir ele, até uma folha é chamado de altura de preto.
 
 ## Funcionamento
-Assim como a Árvore AVL, está árvore contém as operações básicas de uma árvore binária, mais as operações necessárias para verificar e corrigir desbalanceamentos.
+Assim como a Árvore AVL, esta árvore contém as operações básicas de uma árvore binária, mais as operações necessárias para verificar e corrigir desbalanceamentos.
 
 ### Desbalanceamento na inserção
 Por padrão, todo novo nó na árvore é vermelho, e por isso 2 propriedades podem ser quebradas. A primeira é a raiz ser preta, pois o novo nó pode se tornar a nova raiz, e a segunda é os filhos de um nó vermelho ser preto, pois o novo nó pode ser filho desse de um nó vermelho.
