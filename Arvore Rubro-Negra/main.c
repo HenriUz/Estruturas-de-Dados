@@ -6,21 +6,20 @@ Descrição: programa responsável por tratar as entradas do usuário, e com bas
 
 /* --- Includes. --- */
 
+#include "Arvore/ArvoreRN.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "Arvore/ArvoreRN.h"
 
 /* --- Funções. --- */
 
 int main(void) {
     arvore *arv;
     int resp, retorno, chave; //Resposta para o menu, retorno das funções da árvore, chave que será inserida, removida, ou pesquisada.
-    /* Criando a árvore. */
     arv = criaArvore();
     if(!arv) {
         return 1;
     }
-    /* Menu. */
+    /* Iniciando interface. */
     printf("\nMENU.\n1 - Insere.\n2 - Remove.\n3 - Busca.\n4 - Imprime.\n5 - Sair.\nSua Resposta: ");
     scanf("%d", &resp);
     while(resp != 5) {
@@ -65,9 +64,7 @@ int main(void) {
                 printf("\n");
                 break;
             default:
-                break;
         }
-        /* Menu. */
         printf("\nMENU.\n1 - Insere.\n2 - Remove.\n3 - Busca.\n4 - Imprime.\n5 - Sair.\nSua Resposta: ");
         scanf("%d", &resp);
     }
