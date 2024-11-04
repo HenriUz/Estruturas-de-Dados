@@ -6,9 +6,9 @@ Descrição: programa responsável por lidar com os inputs do usuário e por ger
 
 /* --- Includes. --- */
 
+#include "Arvore/Arvore.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "Arvore/Arvore.h"
 
 /* --- Funções. --- */
 
