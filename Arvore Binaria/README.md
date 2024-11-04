@@ -19,9 +19,6 @@ Uma árvore é representada por um conjunto finito de nós que ou está vazio ou
 > [!NOTE]
 > Vale notar que a árvore cheia é a árvore ideal, sua complexidade é O( $\log_2(n)$ ). A quantidade de nós por nível pode ser calculada por $2^{nível}$, e a altura por $\log_2(n+1) - 1$.
 
-## Objetivo
-Este repositório tem o objetivo de mostrar o funcionamento de uma árvore binária comum por meio da implementação de uma interface por terminal.
-
 ## Funcionamento
 As operações principais de uma árvore são a inserção (adicionar uma folha), remoção (remover um nó), busca, e impressão da árvore. 
 
@@ -32,3 +29,6 @@ Por fim, a impressão pode ser feita de 3 maneiras:
 - Em ordem: imprime subárvore esquerda, depois a raiz, e por fim a subárvore direita.
 - Pré-ordem: imprime a raiz, depois a subárvore esquerda, e por fim a subárvore direita.
 - Pós-ordem: imprime a subárvore direita, depois a raiz, e por fim a subárvore esquerda.
+
+## Objetivo
+Este repositório tem o objetivo de mostrar o funcionamento de uma árvore binária comum por meio da implementação de uma interface por terminal.
