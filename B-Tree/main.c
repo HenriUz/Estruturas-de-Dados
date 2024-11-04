@@ -6,12 +6,12 @@ Descrição: código responsável por lidar com os inputs do usuário, por forne
 
 /* --- Includes. --- */
 
+#include "ArvoreB/ArvoreB.h"
+#include "ES/ES.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
-#include "ES/ES.h"
-#include "ArvoreB/ArvoreB.h"
 
 /* --- Estruturas. --- */
 
@@ -29,11 +29,11 @@ typedef struct metricas {
 /* --- Funções. --- */
 
 /*
-Descrição: função que faz a busca por uma matrícula usando o índice.
+Descrição: função responsável por fazer a busca por uma matrícula usando o índice.
 Entrada: ponteiro para o arquivo, inteiro da linha onde se encontra o registro.
 Saída: nada.
 */
-void buscaIndice(FILE *arq, int linha) {
+void buscaIndice(FILE *arq, const int linha) {
     registro reg;
     char line[100];
     int tam;
@@ -41,7 +41,7 @@ void buscaIndice(FILE *arq, int linha) {
     rewind(arq);
     /* Lendo uma linha até o \n e contando o seu tamanho. */
     fgets(line, 100, arq);
-    tam = strlen(line);
+    tam = (int)strlen(line);
     /* Procurando a posição no arquivo (o +1 provavelmente é por causa do \r). */
     fseek(arq, (tam + 1) * linha, SEEK_SET);
     /* Lendo os dados da posição. */
@@ -50,11 +50,11 @@ void buscaIndice(FILE *arq, int linha) {
 }
 
 /*
-Descrição: função que faz a busca diretamente no arquivo fornecido a matrícula fornecida.
+Descrição: função responsável por fazer a busca diretamente no arquivo fornecido.
 Entrada: ponteiro para o arquivo, inteiro da matrícula que se deseja buscar.
 Saída: nada.
 */
-void buscaDireta(FILE *arq, int mat) {
+void buscaDireta(FILE *arq, const int mat) {
     registro reg;
     /* Setando condição de parada. */
     reg.mat = -1;
@@ -82,7 +82,7 @@ int main(void) {
     printf("\nVocê deseja criar um novo dataset?\nResposta (Sim - 1, Não - 0): ");
     scanf("%d", &resp);
     printf("\nDigite o nome do dataset (com o .txt): ");
-    scanf(" %s", dataset);
+    scanf(" %49s", dataset);
     strcat(path, dataset); //Concatenando o nome do arquivo com o caminho para a pasta dele.
     if(resp) {
         /* Criando um novo dataset, com a quantidade de linhas fornecida pelo usuário. */
@@ -117,7 +117,7 @@ int main(void) {
     if(!arv) {
         return 1;
     }
-    /* Menu. */
+    /* Iniciando interface. */
     printf("\nMENU:\n1 - Criar indices.\n2 - Remover.\n3 - Busca.\n4 - Imprimir.\n5 - Sair.\nSua resposta: ");
     scanf("%d", &resp);
     while(resp != 5) {
@@ -209,7 +209,7 @@ int main(void) {
                     direta.media /= resp - aux;
                     /* Escrevendo os resultados em um arquivo. */
                     printf("\nBuscas realizadas!\nDigite o nome do arquivo de resultados (com o .txt): ");
-                    scanf(" %s", dataset);
+                    scanf(" %49s", dataset);
                     strcat(pathR, dataset); //Concatenando o nome do arquivo com o caminho para a pasta dele.
                     res = fopen(pathR, "w");
                     if(!res) {
@@ -219,6 +219,7 @@ int main(void) {
                         fprintf(res, "\n%s\n%s: %f\n%s: %f\n%s: %f\n", "Resultados da busca direta:", "Tempo Máximo", direta.tempoMax, "Tempo Mínimo", direta.tempoMin, "Média", direta.media);
                     }
                     fclose(res);
+                    res = NULL;
                 }
                 break;
             case 4:
@@ -228,14 +229,13 @@ int main(void) {
             default:
                 break;
         }
-        /* Menu. */
         printf("\nMENU:\n1 - Criar indices.\n2 - Remover.\n3 - Busca.\n4 - Imprimir.\n5 - Sair.\nSua resposta: ");
         scanf("%d", &resp);
     }
     /* Fechando arquivos. */
     fclose(arq);
-    if(res) {
-        fclose(res);
-    }
+    arq = NULL;
+    free(arv);
+    arv = NULL;
     return 0;
 }
