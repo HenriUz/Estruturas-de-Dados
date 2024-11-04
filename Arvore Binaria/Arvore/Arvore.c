@@ -1,8 +1,16 @@
+/*
+Arvore.c
+
+Descrição: implementação das funções da árvore.
+*/
+
+/* --- Includes. --- */
+
 #include "Arvore.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-/*** -- Estruturas. -- ***/
+/* --- Estruturas. --- */
 
 struct arvore {
     no *raiz;
@@ -14,15 +22,14 @@ struct no {
     no *pai, *filhoE, *filhoD;
 };
 
-/*** -- Funções. -- ***/
+/* --- Funções. --- */
 
 arvore *criaArvore() {
-    /*** -- Criando a árvore. -- ***/
     arvore *arv = (arvore*)malloc(sizeof(arvore));
     if(!arv) {
         return NULL;
     }
-    /*** -- Setando os valores. -- ***/
+    /* Setando os valores da árvore. */
     arv->raiz = NULL;
     arv->numElementos = 0;
     return arv;
@@ -37,31 +44,28 @@ int getNumElementos(arvore *arv) {
 }
 
 no *criaNo(int chave) {
-    /*** -- Criando o nó. -- ***/
     no *folha = (no*)malloc(sizeof(no));
     if(!folha) {
         return NULL;
     }
-    /*** -- Setando os valores. -- ***/
+    /* Setando os valores do nó. */
     folha->chave = chave;
     folha->pai = folha->filhoD = folha->filhoE = NULL;
     return folha;
 }
 
 int insere(arvore *arv, int chave) {
-    /*** -- Criando a folha e ponteiros auxiliares. -- ***/
-    no *folha = criaNo(chave), *pai, *atual;
+    no *folha = criaNo(chave), *pai, *atual; //Atual será o ponteiro que irá encontrar a folha onde iremos inserir, e pai será o ponteiro que guardará o pai do atual.
     if(!folha) {
         return 0;
     }
-    /*** -- Inserindo. -- ***/
+    /* Inserindo. */
     if(!arv->numElementos) {
-        //Árvore vazia, inserindo a folha na raiz.
+        /* Inserindo a raiz */
         arv->raiz = folha;
     }else {
-        //Árvore com elementos, percorrendo a árvore. Atual será o ponteiro que irá encontrar a folha onde iremos inserir, e pai será o ponteiro que guardará o pai.
+        /* Buscando posição para inserir. */
         atual = arv->raiz;
-        //Enquanto atual existir, percorra até achar a folha.
         while(atual) {
             pai = atual;
             if(chave < atual->chave) {
@@ -70,28 +74,26 @@ int insere(arvore *arv, int chave) {
                 atual = atual->filhoD;
             }
         }
-        //Verificando em qual filho a folha irá entrar no pai.
+        /* Vinvulando folha com o pai. */
         if(chave < pai->chave) {
             pai->filhoE = folha;
         }else {
             pai->filhoD = folha;
         }
-        //Vinculando com o pai.
         folha->pai = pai;
     }
-    //Aumentando a quantidade de elementos da árvore.
+    /* Atualizando a árvore. */
     arv->numElementos++;
     return 1;
 }
 
 int deleta(arvore *arv, int chave) {
     no *atual = arv->raiz, *aux;
-    /*** -- Verificando se a árvore está vazia. -- ***/
     if(!arv->numElementos) {
         //Árvore vazia.
         return 0;
     }
-    /*** -- Buscando o elemento. -- ***/
+    /* Buscando o elemento. */
     while(atual && atual->chave != chave) {
         if(chave < atual->chave) {
             atual = atual->filhoE;
@@ -99,9 +101,9 @@ int deleta(arvore *arv, int chave) {
             atual = atual->filhoD;
         }
     }
-    /*** -- Verificando se o elemento foi encontrado. -- ***/
+    /* Removendo. */
     if(atual) {
-        //Elemento encontrado, verificando seus filhos.
+        //Elemento encontrado.
         if(!atual->filhoE && !atual->filhoD) {
             //Elemento é folha, apenas desvincula do pai.
             if(atual == arv->raiz) {
@@ -116,13 +118,14 @@ int deleta(arvore *arv, int chave) {
         }else if(atual->filhoE && atual->filhoD) {
             //Elemento tem os dois filhos. Aux irá guardar o elemento atual, e o atual irá buscar o predecessor.
             aux = atual;
+            /* Buscando predecessor. */
             atual = atual->filhoE;
             while(atual->filhoD) {
                 atual = atual->filhoD;
             }
-            //Realizando a cópia por valor.
+            /* Realizando cópia. */.
             aux->chave = atual->chave;
-            //Removendo o nó predecessor.
+            /* Removendo o nó predecessor. */
             if(atual->pai->filhoE == atual) {
                 atual->pai->filhoE = atual->filhoE;
             }else {
@@ -132,8 +135,8 @@ int deleta(arvore *arv, int chave) {
                 atual->filhoE->pai = atual->pai;
             }
         }else if(atual->filhoE) {
-            //Elemento possui apenas o filho esquerdo, então vincula o pai com o filho, e vice-versa.
-            if(atual == arv->raiz) {
+            //Elemento possui apenas o filho esquerdo.
+            if(atual == arv->raiz) { //Necessário quando não há um sentinela implementado.
                 arv->raiz = atual->filhoE;
             }else {
                 if(atual->pai->filhoE == atual) {
@@ -144,8 +147,8 @@ int deleta(arvore *arv, int chave) {
             }
             atual->filhoE->pai = atual->pai;
         }else {
-            //Elemento possui apenas o filho direito, então vincula o pai com o filho, e vice-versa.
-            if(atual == arv->raiz) {
+            //Elemento possui apenas o filho direito.
+            if(atual == arv->raiz) { //Necessário quando não há um sentinela implementado.
                 arv->raiz = atual->filhoD;
             }else {
                 if(atual->pai->filhoE == atual) {
@@ -156,6 +159,7 @@ int deleta(arvore *arv, int chave) {
             }
             atual->filhoD->pai = atual->pai;
         }
+        /* Liberando o nó e atualizando a árvore. */
         free(atual);
         atual = NULL;
         arv->numElementos--;
@@ -174,17 +178,15 @@ void esvaziaArvore(arvore *arv) {
 int busca(arvore *arv, int chave) {
     no *raiz = arv->raiz;
     int encontrou = 0;
-    /*** -- Procurando o elemento. -- ***/
+    /* Buscando o elemento. */
     while(raiz) {
         if(chave == raiz->chave) {
             //Elemento encontrado, anulando raiz para sair do loop.
             encontrou = 1;
             raiz = NULL;
         }else if(chave < raiz->chave) {
-            //Elemento só pode estar na sub-árvore esquerda.
             raiz = raiz->filhoE;
         }else {
-            //Elemento só pode estar na sub-árvore direita.
             raiz = raiz->filhoD;
         }
     }
