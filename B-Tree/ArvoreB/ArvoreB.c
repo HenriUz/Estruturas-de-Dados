@@ -32,8 +32,7 @@ struct chave {
 
 /* --- Funções. --- */
 
-arvore *criaArvore(int ordem) {
-    /* Criando a árvore. */
+arvore *criaArvore(const int ordem) {
     arvore *arv = (arvore*)malloc(sizeof(arvore));
     if(!arv) {
         return NULL;
@@ -45,20 +44,19 @@ arvore *criaArvore(int ordem) {
     return arv;
 }
 
-pagina *getRaiz(arvore *arv) {
+pagina *getRaiz(const arvore *arv) {
     return arv->raiz;
 }
 
-int getNumElementos(arvore *arv) {
+int getNumElementos(const arvore *arv) {
     return arv->numElementos;
 }
 
-int getOrdem(arvore *arv) {
+int getOrdem(const arvore *arv) {
     return arv->ordem;
 }
 
-pagina *criaPagina(int maximoElementos) {
-    /* Criando a página. */
+pagina *criaPagina(const int maximoElementos) {
     pagina *page = (pagina*)malloc(sizeof(pagina));
     if(!page) {
         return NULL;
@@ -87,7 +85,7 @@ pagina *criaPagina(int maximoElementos) {
     return page;
 }
 
-pagina *criaRaiz(arvore *arv, pagina *filhoD, chave *key) {
+pagina *criaRaiz(const arvore *arv, pagina *filhoD, chave *key) {
     /* Criando a página. */
     pagina *raiz = criaPagina(arv->ordem - 1);
     if(!raiz) {
@@ -112,7 +110,7 @@ pagina *criaRaiz(arvore *arv, pagina *filhoD, chave *key) {
     return raiz;
 }
 
-void insereNaPagina(pagina *page, pagina *filhoD, chave *newChave, int pos) {
+void insereNaPagina(pagina *page, pagina *filhoD, chave *newChave, const int pos) {
     /* Deslocando os elementos para a direita. */
     for(int i = page->numChaves; i > pos; i--) {
         page->chaves[i] = page->chaves[i-1];
@@ -127,8 +125,8 @@ void insereNaPagina(pagina *page, pagina *filhoD, chave *newChave, int pos) {
     page->numChaves++;
 }
 
-void split(arvore *arv, pagina *page, pagina *filhoD, pagina **salvaFilhoD, chave *newChave, chave **salvaChave, int pos) {
-    int posMediana = page->numChaves/2;
+void split(arvore *arv, pagina *page, pagina *filhoD, pagina **salvaFilhoD, chave *newChave, chave **salvaChave, const int pos) {
+    const int posMediana = page->numChaves/2;
     /* Criando a nova página. */
     *salvaFilhoD = criaPagina(page->numChaves); //Criando a nova página, que consequentemente se tornará o novo filho direito para o pai.
     if(!*salvaFilhoD) {
@@ -192,7 +190,7 @@ int procuraPaginaI(arvore *arv, pagina *page, pagina **filhoD, chave *newChave, 
     return 0;
 }
 
-int insere(arvore *arv, int mat, int linha) {
+int insere(arvore *arv, const int mat, const int linha) {
     pagina *filhoD, *raiz; //Ponteiro que irá salvar o filho direito, e ponteiro que irá salvar a raiz anterior.
     chave *newChave = (chave*)malloc(sizeof(chave)); //Nova chave.
     chave **salvaChave = &newChave; //Ponteiro que salva a chave.
@@ -237,9 +235,9 @@ int processaCarga(arvore *arv, FILE *dataset) {
     return 1;
 }
 
-void copiaPredecessor(pagina *page, int pos) {
+void copiaPredecessor(const pagina *page, const int pos) {
     /* Procurando o predecessor. */
-    pagina *filho = page->filhos[pos];
+    const pagina *filho = page->filhos[pos];
     while(!filho->folha) {
         filho = filho->filhos[filho->numChaves];
     }
@@ -248,7 +246,7 @@ void copiaPredecessor(pagina *page, int pos) {
     page->chaves[pos]->linha = filho->chaves[filho->numChaves - 1]->linha;
 }
 
-void removeDaPagina(pagina *page, int pos) {
+void removeDaPagina(pagina *page, const int pos) {
     chave *aux = page->chaves[pos];
     /* Deslocando valores. */
     for(int i = pos; i < page->numChaves - 1; i++) {
@@ -261,7 +259,7 @@ void removeDaPagina(pagina *page, int pos) {
     aux = NULL;
 }
 
-void merge(pagina *pai, int pos) {
+void merge(pagina *pai, const int pos) {
     pagina *filhoE = pai->filhos[pos - 1], *filhoD = pai->filhos[pos];
     /* Descendo o pai. */
     filhoE->chaves[filhoE->numChaves] = pai->chaves[pos-1];
@@ -293,7 +291,7 @@ void merge(pagina *pai, int pos) {
     filhoD = NULL;
 }
 
-void emprestaDireita(pagina *pai, int pos) {
+void emprestaDireita(const pagina *pai, const int pos) {
     pagina *filhoE = pai->filhos[pos], *filhoD = pai->filhos[pos+1];
     /* Descendo o pai. */
     filhoE->chaves[filhoE->numChaves] = pai->chaves[pos];
@@ -315,7 +313,7 @@ void emprestaDireita(pagina *pai, int pos) {
     filhoD->filhos[filhoD->numChaves + 1] = NULL;
 }
 
-void emprestaEsquerda(pagina *pai, int pos) {
+void emprestaEsquerda(const pagina *pai, const int pos) {
     pagina *filhoE = pai->filhos[pos-1], *filhoD = pai->filhos[pos];
     /* Deslocando elementos do filho direito. */
     for(int i = filhoD->numChaves; i > 0; i--) {
@@ -337,7 +335,7 @@ void emprestaEsquerda(pagina *pai, int pos) {
     filhoE->filhos[filhoE->numChaves+1] = NULL;
 }
 
-void corrigiFilho(arvore *arv, pagina *pai, int pos) {
+void corrigiFilho(const arvore *arv, pagina *pai, const int pos) {
     /* Verificando onde está o filho com a quantidade abaixo do mínimo. */
     if(!pos) {
         //Filho é o mais a esquerda, então só pode emprestar do irmão direito ou dar merge.
@@ -367,7 +365,7 @@ void corrigiFilho(arvore *arv, pagina *pai, int pos) {
     }
 }
 
-int procuraPaginaD(arvore *arv, pagina *page, int mat) {
+int procuraPaginaD(arvore *arv, pagina *page, const int mat) {
     int cond = 0, pos;
     if(page) {
         /* Procurando elemento. */
@@ -399,7 +397,7 @@ int procuraPaginaD(arvore *arv, pagina *page, int mat) {
     return cond;
 }
 
-int deleta(arvore *arv, int mat) {
+int deleta(arvore *arv, const int mat) {
     pagina *aux;
     int cond;
     /* Verificando condições. */
@@ -426,7 +424,7 @@ int deleta(arvore *arv, int mat) {
     return -1;
 }
 
-int busca(arvore *arv, int mat) {
+int busca(const arvore *arv, const int mat) {
     pagina *aux, *atual = arv->raiz;
     int linha = -1;
     /* Iniciando a busca. */
@@ -450,7 +448,7 @@ int busca(arvore *arv, int mat) {
     return linha;
 }
 
-void imprimeArvore(pagina *page, int nivel) {
+void imprimeArvore(const pagina *page, const int nivel) {
     if(page) {
         printf("\n%d - Número de Elementos: %d - Elementos: ", nivel, page->numChaves);
         for(int i = 0; i < page->numChaves; i++) {
