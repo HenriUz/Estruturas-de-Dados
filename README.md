@@ -1,8 +1,8 @@
 # Estruturas de Dados
 ## Sobre
-Este repositório tem a função de armazenar algumas das estruturas de dados existentes. Neste caso, todas elas foram desenvolvidas na linguagem **C**.
+Este repositório tem a função de armazenar algumas das estruturas de dados existentes, implementadas na linguagem **C**.
 
-Além de apenas armazar as estruturas de dados, também há uma explicação sobre o que elas são e como funcionam.
+Além de armazenar as estruturas de dados, também há uma explicação sobre o que elas são e como funcionam.
 
 ## Organização
 - [Arvore AVL](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Arvore%20AVL): implementação da Árvore AVL.
