@@ -10,4 +10,5 @@ Além de armazenar as estruturas de dados, também há uma explicação sobre o 
 - [Arvore Rubro-Negra](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Arvore%20Rubro-Negra): implementação da Árvore Rubro-Negra.
 - [B-Tree](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/B-Tree): implementação de uma B-Tree para ordens pares, e benchmarking do tempo de busca em um arquivo usando a B-Tree e não usando ela.
 - [Fila](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Fila): implementação de uma fila.
+- [Lista Simples](/lista-simples): implementação de uma lista simplesmente encadeada.
 - [Pilha](https://github.com/HenriUz/Estruturas-de-Dados/tree/main/Pilha): implementação de uma pilha. 
